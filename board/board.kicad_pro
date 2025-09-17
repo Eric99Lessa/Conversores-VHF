@@ -588,20 +588,12 @@
       "Root"
     ],
     [
-      "92a0d1f9-4a95-4d63-a6fe-c77d28cfe3e8",
-      "Comunicacao"
+      "b29d10ff-0025-46dd-9680-2167c498e6aa",
+      "Fontes de Alimentação"
     ],
     [
       "90c49c41-4e5e-4cb7-8d94-45cf3dbd4784",
       "PWM - 15V Level Shifter"
-    ],
-    [
-      "6e4bb4f3-ac55-418e-8920-caf6fa0afedf",
-      "Instrumentação"
-    ],
-    [
-      "d651941e-d520-475b-bca1-e38ab04dbdf6",
-      "Alimentacao"
     ]
   ],
   "text_variables": {}
