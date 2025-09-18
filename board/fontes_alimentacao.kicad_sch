@@ -840,10 +840,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "f177b5e2-d3db-4c02-952f-ed8ce50477d2")
+			(uuid "f177b5e2-d3db-4c02-952f-ed8ce50477d3")
 		)
 		(pin "1"
-			(uuid "e90caa3c-d64b-4f23-a52c-75ec763908fd")
+			(uuid "e90caa3c-d64b-4f23-a52c-75ec763908fe")
 		)
 		(instances
 			(project ""

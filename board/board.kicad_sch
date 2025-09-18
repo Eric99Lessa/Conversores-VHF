@@ -1550,8 +1550,8 @@
 		)
 	)
 	(sheet
-		(at 173.99 67.31)
-		(size 44.45 57.15)
+		(at 173.99 88.9)
+		(size 36.83 25.4)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -1562,7 +1562,7 @@
 		)
 		(uuid "90c49c41-4e5e-4cb7-8d94-45cf3dbd4784")
 		(property "Sheetname" "PWM - 15V Level Shifter"
-			(at 173.99 66.5984 0)
+			(at 173.99 88.1884 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1571,7 +1571,7 @@
 			)
 		)
 		(property "Sheetfile" "PWM_level_shifter_15V.kicad_sch"
-			(at 173.99 125.0446 0)
+			(at 173.99 114.8846 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1579,27 +1579,71 @@
 				(justify left top)
 			)
 		)
-		(pin "err_2_micro" bidirectional
-			(at 173.99 105.41 180)
+		(property "R_e_pwm" "150"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "R_l_pwm" "1k5"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "C_e_pwm" "C_e_pwm"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "R_e_err" "1k2"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "R_l_err" "470"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "C_e_err" "C_e_err"
+			(at 173.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "PWM_BOT_2_micro" input
+			(at 173.99 93.98 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "3c570ff7-cf71-4ff6-af46-8507c71fa6b1")
+			(uuid "78c37618-f8f1-403e-8ea0-de09f7070ce8")
 		)
-		(pin "err_2_driver" input
-			(at 173.99 101.6 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "ec949b0a-5054-4ddb-9fd8-8e5b2e16ed52")
-		)
-		(pin "err_1_micro" bidirectional
+		(pin "PWM_BOT_3_micro" input
 			(at 173.99 96.52 180)
 			(effects
 				(font
@@ -1607,9 +1651,19 @@
 				)
 				(justify left)
 			)
-			(uuid "9df00092-d8d7-41af-84d2-a1a7039dd5e0")
+			(uuid "e43f25e4-8fb9-4d91-961a-f84c6d007431")
 		)
-		(pin "err_1_driver" input
+		(pin "err_2_micro" output
+			(at 173.99 109.22 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "0ffd0bc0-0022-4293-897c-ce592a10bdae")
+		)
+		(pin "PWM_BOT_1_micro" input
 			(at 173.99 91.44 180)
 			(effects
 				(font
@@ -1617,67 +1671,57 @@
 				)
 				(justify left)
 			)
-			(uuid "04a86ae7-3ea6-4acd-b7a4-6965f8c34f92")
+			(uuid "37167330-2b88-44bc-8788-14892ddeb1cb")
 		)
-		(pin "PWM_TOP_1_driver" output
-			(at 173.99 87.63 180)
+		(pin "err_1_micro" output
+			(at 173.99 106.68 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "58727e25-a09b-4dc4-ad72-5d1f1c8ad572")
+			(uuid "db5d6b41-b46c-4643-9b93-bddd60c752f2")
 		)
-		(pin "PWM_TOP_2_driver" output
-			(at 173.99 82.55 180)
+		(pin "PWM_TOP_1_micro" input
+			(at 173.99 99.06 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "90056529-04f6-4040-8b17-66203e03a0aa")
+			(uuid "edd6584f-ea79-4756-a21b-61e565420d72")
 		)
-		(pin "PWM_TOP_3_driver" output
-			(at 173.99 77.47 180)
+		(pin "PWM_TOP_3_micro" input
+			(at 173.99 104.14 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "115f079c-2122-4fcc-bd8c-b493505c3203")
+			(uuid "e337f4e2-d724-4d8f-8f96-72e2d71b7b7e")
 		)
-		(pin "PWM_BOT_2_micro" input
-			(at 173.99 74.93 180)
+		(pin "PWM_TOP_2_micro" input
+			(at 173.99 101.6 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "da9e1110-2cc2-428b-9b79-1b4b70412f7b")
+			(uuid "2dc8091e-2bf1-4e18-8787-feef5d16f7a8")
 		)
-		(pin "PWM_BOT_3_micro" input
-			(at 180.34 67.31 90)
+		(pin "err_3_micro" output
+			(at 173.99 111.76 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
-			(uuid "9c57a41e-d58c-4c72-bbfc-dfd45a05394f")
-		)
-		(pin "PWM_BOT_1_micro" input
-			(at 218.44 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "1e1f1061-620c-4a97-90aa-5b4a890afd5f")
+			(uuid "0f20d532-3920-4523-ba5b-040edb8e94d3")
 		)
 		(instances
 			(project "board"
