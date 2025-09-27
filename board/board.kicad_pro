@@ -51,7 +51,13 @@
           "min_clearance": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -171,7 +177,14 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        0.5,
+        0.8,
+        1.0,
+        1.5,
+        2.0
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -198,7 +211,24 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        },
+        {
+          "diameter": 1.1,
+          "drill": 1.0
+        },
+        {
+          "diameter": 2.2,
+          "drill": 2.0
+        },
+        {
+          "diameter": 3.3,
+          "drill": 3.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -588,12 +618,112 @@
       "Root"
     ],
     [
-      "b29d10ff-0025-46dd-9680-2167c498e6aa",
-      "Fontes de Alimentação"
+      "54eee298-1ebc-4f78-aeba-50023d2029d6",
+      "adequacao_sensor_corrente"
     ],
     [
       "90c49c41-4e5e-4cb7-8d94-45cf3dbd4784",
       "PWM - 15V Level Shifter"
+    ],
+    [
+      "9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b",
+      "adequacao_sensor_tensao1"
+    ],
+    [
+      "d6523acf-4a35-49b3-8df2-392463f7dfc0",
+      "adequacao_sensor_tensao"
+    ],
+    [
+      "417fe5a9-3947-49d8-9a77-524f192b095c",
+      "Filtro RC1"
+    ],
+    [
+      "9c0bcb03-3eec-4e91-b96b-918272da8c10",
+      "Filtro RC2"
+    ],
+    [
+      "7d615356-24c6-4d5c-89f8-11ac3313c5e2",
+      "Filtro RC"
+    ],
+    [
+      "484b45ac-854b-4808-a94a-82052b89ba4d",
+      "Adequação Sinais Corrente e Tensão"
+    ],
+    [
+      "f4133426-dc98-451a-9296-d9cf07231099",
+      "Power Connectors"
+    ],
+    [
+      "b66c4993-d833-4ac2-901f-a740ef9d69e4",
+      "Filtro RC3"
+    ],
+    [
+      "6bc42b43-1f09-4868-86cc-13b6bc39566b",
+      "adequacao_sensor_corrente1"
+    ],
+    [
+      "630f9e26-86d8-4dae-8668-563662ced3e2",
+      "Filtro RC4"
+    ],
+    [
+      "0ec4e805-f770-43f6-9ceb-79230d0ce8bc",
+      "adequacao_sensor_corrente2"
+    ],
+    [
+      "76306f3e-e64d-46c5-8ffb-f9960fcc52ac",
+      "Filtro RC5"
+    ],
+    [
+      "23b832df-fa68-4730-aab0-9fb63a0aaa4a",
+      "adequacao_sensor_corrente3"
+    ],
+    [
+      "f0530d57-4207-4b28-8d03-9cc33be1a412",
+      "Conectores - PWM e erro1"
+    ],
+    [
+      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
+      "Isolação de sinais - PWM7"
+    ],
+    [
+      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
+      "Isolação de sinais - PWM6"
+    ],
+    [
+      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
+      "Isolação de sinais - Erro3"
+    ],
+    [
+      "89eae5c2-3bab-4caa-9966-8abf6d8721dc",
+      "Conectores - PWM e erro2"
+    ],
+    [
+      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
+      "Isolação de sinais - PWM7"
+    ],
+    [
+      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
+      "Isolação de sinais - PWM6"
+    ],
+    [
+      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
+      "Isolação de sinais - Erro3"
+    ],
+    [
+      "8e1b14a0-5a44-45bc-9dce-fdb022fd1001",
+      "Conectores - PWM e erro"
+    ],
+    [
+      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
+      "Isolação de sinais - PWM6"
+    ],
+    [
+      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
+      "Isolação de sinais - Erro3"
+    ],
+    [
+      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
+      "Isolação de sinais - PWM7"
     ]
   ],
   "text_variables": {}
