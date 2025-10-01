@@ -1262,7 +1262,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0b0d74b3-e5c5-4188-856e-ad83aac67dd9")
-		(property "Reference" "#PWR27"
+		(property "Reference" "#PWR24"
 			(at 161.29 74.93 0)
 			(effects
 				(font
@@ -1312,11 +1312,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR27")
+					(reference "#PWR24")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR32")
+					(reference "#PWR29")
 					(unit 1)
 				)
 			)
@@ -1404,7 +1404,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2f3a8382-890a-4de0-93f5-29f99b4b26f0")
-		(property "Reference" "U3"
+		(property "Reference" "U2"
 			(at 111.76 66.0714 0)
 			(effects
 				(font
@@ -1465,11 +1465,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "U3")
+					(reference "U2")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "U4")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -1485,7 +1485,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "30abe896-883e-471b-96c3-bdb290ff1eda")
-		(property "Reference" "#PWR24"
+		(property "Reference" "#PWR21"
 			(at 99.06 68.58 0)
 			(effects
 				(font
@@ -1535,11 +1535,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR24")
+					(reference "#PWR21")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR29")
+					(reference "#PWR26")
 					(unit 1)
 				)
 			)
@@ -1775,7 +1775,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94c05143-6933-4d87-a8d0-fd32f578a7d7")
-		(property "Reference" "#PWR25"
+		(property "Reference" "#PWR22"
 			(at 99.06 76.2 0)
 			(effects
 				(font
@@ -1825,11 +1825,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR25")
+					(reference "#PWR22")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR30")
+					(reference "#PWR27")
 					(unit 1)
 				)
 			)
@@ -1845,7 +1845,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a31fe0f0-974c-4c89-8da3-7c2f07238b51")
-		(property "Reference" "#PWR26"
+		(property "Reference" "#PWR23"
 			(at 120.65 90.17 0)
 			(effects
 				(font
@@ -1895,11 +1895,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR26")
+					(reference "#PWR23")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR31")
+					(reference "#PWR28")
 					(unit 1)
 				)
 			)
@@ -1915,7 +1915,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "be26c961-a37a-42d5-ae3b-7885c5d10f73")
-		(property "Reference" "#PWR28"
+		(property "Reference" "#PWR25"
 			(at 161.29 74.93 0)
 			(effects
 				(font
@@ -1965,11 +1965,11 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR28")
+					(reference "#PWR25")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR33")
+					(reference "#PWR30")
 					(unit 1)
 				)
 			)

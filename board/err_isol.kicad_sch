@@ -966,7 +966,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b8847acd-e2a4-46df-81ea-55bd08266609")
-		(property "Reference" "U16"
+		(property "Reference" "U15"
 			(at 113.03 83.8514 0)
 			(effects
 				(font
@@ -1030,15 +1030,15 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/89eae5c2-3bab-4caa-9966-8abf6d8721dc/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
-					(reference "U16")
+					(reference "U15")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/8e1b14a0-5a44-45bc-9dce-fdb022fd1001/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
-					(reference "U19")
+					(reference "U21")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/f0530d57-4207-4b28-8d03-9cc33be1a412/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
-					(reference "U12")
+					(reference "U11")
 					(unit 1)
 				)
 			)

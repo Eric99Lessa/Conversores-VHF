@@ -5,7 +5,7 @@
 	(uuid "b5d05505-db38-4af1-8433-c22455a55735")
 	(paper "A4")
 	(lib_symbols
-		(symbol "power:+5V"
+		(symbol "power:+3.3V"
 			(power)
 			(pin_numbers hide)
 			(pin_names
@@ -22,7 +22,7 @@
 					(hide yes)
 				)
 			)
-			(property "Value" "+5V"
+			(property "Value" "+3.3V"
 				(at 0 3.556 0)
 				(effects
 					(font
@@ -48,7 +48,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(property "Description" "Power symbol creates a global label with name \"+3.3V\""
 				(at 0 0 0)
 				(effects
 					(font
@@ -66,7 +66,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "+5V_0_1"
+			(symbol "+3.3V_0_1"
 				(polyline
 					(pts
 						(xy -0.762 1.27) (xy 0 2.54)
@@ -104,7 +104,7 @@
 					)
 				)
 			)
-			(symbol "+5V_1_1"
+			(symbol "+3.3V_1_1"
 				(pin power_in line
 					(at 0 0 90)
 					(length 0)
@@ -658,6 +658,72 @@
 		(uuid "cf9c148b-29b9-4aea-a25c-5150e658e0f2")
 	)
 	(symbol
+		(lib_id "power:+3.3V")
+		(at 68.58 82.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0e346f48-e50b-4f53-8557-2f6a50b4283e")
+		(property "Reference" "#PWR11"
+			(at 68.58 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 68.58 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 68.58 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.58 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 68.58 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2c09348b-e9cc-49b3-9f41-2b8e3496ca92")
+		)
+		(instances
+			(project "board"
+				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
+					(reference "#PWR11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:Vdrive")
 		(at 87.63 82.55 0)
 		(unit 1)
@@ -667,7 +733,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1ad7c5db-db83-4885-9e5b-e8fb9f1fac1a")
-		(property "Reference" "#PWR20"
+		(property "Reference" "#PWR17"
 			(at 87.63 86.36 0)
 			(effects
 				(font
@@ -717,7 +783,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR20")
+					(reference "#PWR17")
 					(unit 1)
 				)
 			)
@@ -732,7 +798,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "38f247ff-87d4-4c56-a997-ccae0a68ee79")
-		(property "Reference" "#PWR17"
+		(property "Reference" "#PWR14"
 			(at 68.58 193.04 0)
 			(effects
 				(font
@@ -782,14 +848,14 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR17")
+					(reference "#PWR14")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
+		(lib_id "power:+3.3V")
 		(at 68.58 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -797,8 +863,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "39de2e56-2525-4ec7-98cc-95ba1ff3117a")
-		(property "Reference" "#PWR12"
+		(uuid "458df592-bae7-4a66-8a6b-9f2a1d536beb")
+		(property "Reference" "#PWR9"
 			(at 68.58 26.67 0)
 			(effects
 				(font
@@ -807,7 +873,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
+		(property "Value" "+3.3V"
 			(at 68.58 17.78 0)
 			(effects
 				(font
@@ -833,7 +899,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
 			(at 68.58 22.86 0)
 			(effects
 				(font
@@ -843,12 +909,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "61c2a192-705d-4b65-ac8f-db2fe7f2e9bc")
+			(uuid "1fc6e3e4-1a2e-48d0-a371-a194e03d296c")
 		)
 		(instances
-			(project "board"
+			(project ""
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR12")
+					(reference "#PWR9")
 					(unit 1)
 				)
 			)
@@ -864,7 +930,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "45c809ff-50c8-48d6-86a8-e6a53c78d09e")
-		(property "Reference" "#PWR21"
+		(property "Reference" "#PWR18"
 			(at 87.63 133.35 0)
 			(effects
 				(font
@@ -914,14 +980,14 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR21")
+					(reference "#PWR18")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
+		(lib_id "power:+3.3V")
 		(at 68.58 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -929,8 +995,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4f7cad50-2d94-47bc-98fd-19f9668d1147")
-		(property "Reference" "#PWR16"
+		(uuid "58a8991f-c5df-4b49-8196-380a48892ae5")
+		(property "Reference" "#PWR13"
 			(at 68.58 146.05 0)
 			(effects
 				(font
@@ -939,7 +1005,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
+		(property "Value" "+3.3V"
 			(at 68.58 137.16 0)
 			(effects
 				(font
@@ -965,7 +1031,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
 			(at 68.58 142.24 0)
 			(effects
 				(font
@@ -975,12 +1041,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "6b20d20a-35c6-41f4-8e34-fdc5c3c6c0d3")
+			(uuid "5353020c-b176-452e-9914-a65db4d81340")
 		)
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR16")
+					(reference "#PWR13")
 					(unit 1)
 				)
 			)
@@ -996,7 +1062,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5abf9581-0f89-42ff-b0ec-eab22043d5e4")
-		(property "Reference" "#PWR22"
+		(property "Reference" "#PWR19"
 			(at 87.63 146.05 0)
 			(effects
 				(font
@@ -1046,73 +1112,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 68.58 82.55 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "613a20ea-bb1d-46e9-9774-2e79623ee437")
-		(property "Reference" "#PWR14"
-			(at 68.58 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 68.58 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3df7f4f6-fa19-4dd2-a65b-7c20ffc6dd7f")
-		)
-		(instances
-			(project "board"
-				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR14")
+					(reference "#PWR19")
 					(unit 1)
 				)
 			)
@@ -1127,7 +1127,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "88d387ce-e7f5-4d81-8477-7374f2e78cbf")
-		(property "Reference" "#PWR13"
+		(property "Reference" "#PWR10"
 			(at 68.58 73.66 0)
 			(effects
 				(font
@@ -1177,7 +1177,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR13")
+					(reference "#PWR10")
 					(unit 1)
 				)
 			)
@@ -1193,7 +1193,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8cace955-f532-4211-9b33-03bff7a94174")
-		(property "Reference" "#PWR19"
+		(property "Reference" "#PWR16"
 			(at 87.63 73.66 0)
 			(effects
 				(font
@@ -1243,7 +1243,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR19")
+					(reference "#PWR16")
 					(unit 1)
 				)
 			)
@@ -1259,7 +1259,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a4fb2480-74b9-429e-b16f-a496dc8f990d")
-		(property "Reference" "#PWR23"
+		(property "Reference" "#PWR20"
 			(at 87.63 193.04 0)
 			(effects
 				(font
@@ -1309,7 +1309,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR23")
+					(reference "#PWR20")
 					(unit 1)
 				)
 			)
@@ -1324,7 +1324,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ca563056-6da0-48d8-9649-8a0c3ccada67")
-		(property "Reference" "#PWR15"
+		(property "Reference" "#PWR12"
 			(at 68.58 133.35 0)
 			(effects
 				(font
@@ -1374,7 +1374,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR15")
+					(reference "#PWR12")
 					(unit 1)
 				)
 			)
@@ -1390,7 +1390,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d32f1e91-4937-407d-9169-97252a5c9d8d")
-		(property "Reference" "#PWR18"
+		(property "Reference" "#PWR15"
 			(at 87.63 26.67 0)
 			(effects
 				(font
@@ -1440,7 +1440,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(reference "#PWR18")
+					(reference "#PWR15")
 					(unit 1)
 				)
 			)
