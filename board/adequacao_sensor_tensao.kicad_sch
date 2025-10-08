@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "288a2c4c-6545-44c4-a1eb-56f54f483179")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "Connector:Conn_01x02_Pin"
 			(pin_names

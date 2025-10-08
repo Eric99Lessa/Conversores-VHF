@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "b5d05505-db38-4af1-8433-c22455a55735")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "power:+3.3V"
 			(power)
@@ -1549,7 +1553,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(page "20")
+					(page "5")
 				)
 			)
 		)
@@ -1657,7 +1661,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(page "26")
+					(page "6")
 				)
 			)
 		)
@@ -1765,7 +1769,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784"
-					(page "16")
+					(page "4")
 				)
 			)
 		)

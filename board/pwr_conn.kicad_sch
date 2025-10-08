@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "55869709-06a3-44b9-a31f-da0b202ed4c0")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "Connectors:Conn_02x02_ZigZag"
 			(pin_names
@@ -1756,6 +1760,16 @@
 		)
 		(uuid "fd691cb0-a7db-44ce-a711-ef667bbef298")
 	)
+	(label "+15V_sym_conn"
+		(at 30.48 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "05164a5f-4279-4ffa-b4b6-78aed2d3f1c3")
+	)
 	(label "Vdrive"
 		(at 96.52 116.84 0)
 		(effects
@@ -1826,16 +1840,6 @@
 		)
 		(uuid "3f70c99c-226b-449c-ae13-df4f63036bc7")
 	)
-	(label "+15V_sym_conn"
-		(at 43.18 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "464ed6bc-7599-49bd-8dd2-02c88a30a569")
-	)
 	(label "5V_conn"
 		(at 30.48 30.48 180)
 		(effects
@@ -1845,16 +1849,6 @@
 			(justify right bottom)
 		)
 		(uuid "5b34dcd2-96ca-4984-9db2-4e926f53c284")
-	)
-	(label "-15V_sym_conn"
-		(at 43.18 76.2 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5dbca99d-6ae9-4fa5-ab6d-b5ada1c47996")
 	)
 	(label "5V_conn"
 		(at 77.47 26.67 180)
@@ -1937,14 +1931,14 @@
 		(uuid "b2283001-45e5-4544-9321-220bf457f70e")
 	)
 	(label "+15V_sym_conn"
-		(at 30.48 71.12 180)
+		(at 43.18 76.2 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "bb25081b-2d06-4e17-bd9e-01da653859b6")
+		(uuid "b9fc20f8-e0d4-4598-8ca3-c95405f48a78")
 	)
 	(label "-15V_sym"
 		(at 96.52 82.55 0)
@@ -1956,6 +1950,16 @@
 		)
 		(uuid "c52ea060-6839-4b63-a144-cc2d3885635f")
 	)
+	(label "-15V_sym_conn"
+		(at 43.18 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d35b5199-f01e-481d-b705-51fedfc080a0")
+	)
 	(label "Vdrive_conn"
 		(at 78.74 116.84 180)
 		(effects
@@ -1966,16 +1970,6 @@
 		)
 		(uuid "d3951b36-7274-425d-93a5-b84e53ab0b60")
 	)
-	(label "-15V_sym_conn"
-		(at 30.48 76.2 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "da1245d4-4fa4-4f2e-9955-b44c125f842f")
-	)
 	(label "GND_sym"
 		(at 111.76 72.39 0)
 		(effects
@@ -1985,6 +1979,16 @@
 			(justify left bottom)
 		)
 		(uuid "dea1fece-2f93-4ec5-8e5c-1fa8bbee9806")
+	)
+	(label "-15V_sym_conn"
+		(at 30.48 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e59f3248-163f-43e1-ba72-2be486bafb72")
 	)
 	(label "GND_driver"
 		(at 43.18 123.19 0)
@@ -2098,7 +2102,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5566-06A_2x03_P4.20mm_Vertical"
+		(property "Footprint" "Modules:Molex_Mini-Fit_Jr_5566-06A_2x03_P4.20mm_Vertical"
 			(at 35.56 73.66 0)
 			(effects
 				(font
@@ -2540,7 +2544,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical"
+		(property "Footprint" "Modules:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical"
 			(at 35.56 120.65 0)
 			(effects
 				(font
@@ -3199,7 +3203,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical"
+		(property "Footprint" "Modules:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical"
 			(at 35.56 30.48 0)
 			(effects
 				(font

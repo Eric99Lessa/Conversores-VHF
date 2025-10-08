@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "0a44a235-3815-48f3-8432-cfa78d2040db")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM324"
 			(pin_names
@@ -1853,7 +1857,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "13")
+					(page "12")
 				)
 			)
 		)
@@ -1946,7 +1950,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "15")
+					(page "13")
 				)
 			)
 		)
@@ -2022,7 +2026,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "6")
+					(page "15")
 				)
 			)
 		)
@@ -2115,7 +2119,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "2")
+					(page "10")
 				)
 			)
 		)
@@ -2191,7 +2195,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "12")
+					(page "18")
 				)
 			)
 		)
@@ -2360,7 +2364,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "14")
+					(page "19")
 				)
 			)
 		)
@@ -2436,7 +2440,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "8")
+					(page "14")
 				)
 			)
 		)
@@ -2520,7 +2524,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "4")
+					(page "9")
 				)
 			)
 		)
@@ -2596,7 +2600,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "7")
+					(page "16")
 				)
 			)
 		)
@@ -2672,7 +2676,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "10")
+					(page "17")
 				)
 			)
 		)
@@ -2756,7 +2760,7 @@
 		(instances
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d"
-					(page "5")
+					(page "8")
 				)
 			)
 		)

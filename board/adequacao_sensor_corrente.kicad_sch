@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "d3329302-cea9-44df-bc3d-f8ddb0420616")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM324"
 			(pin_names

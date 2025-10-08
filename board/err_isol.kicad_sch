@@ -4,6 +4,10 @@
 	(generator_version "8.0")
 	(uuid "f24d5c04-42a6-497f-b94c-7a276f7c43e6")
 	(paper "A4")
+	(title_block
+		(date "2025-10-02")
+		(company "Escola Politécnica da Universidade de São Paulo")
+	)
 	(lib_symbols
 		(symbol "Device:C"
 			(pin_numbers hide)
@@ -946,7 +950,7 @@
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/8e1b14a0-5a44-45bc-9dce-fdb022fd1001/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
-					(reference "C32")
+					(reference "C35")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/f0530d57-4207-4b28-8d03-9cc33be1a412/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
@@ -1109,7 +1113,7 @@
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/8e1b14a0-5a44-45bc-9dce-fdb022fd1001/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
-					(reference "C31")
+					(reference "C34")
 					(unit 1)
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/90c49c41-4e5e-4cb7-8d94-45cf3dbd4784/f0530d57-4207-4b28-8d03-9cc33be1a412/80c37905-981e-40ed-8bc4-c6bd1141d6f2"
