@@ -1,0 +1,783 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "01568b53-f202-4f02-9c1a-9c10c7610b4b")
+	(paper "A4")
+	(lib_symbols)
+	(label "err_1"
+		(at 210.82 114.3 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0f31059b-a471-4d7f-8270-2fa988beb35e")
+	)
+	(label "PWM_TOP_1"
+		(at 210.82 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "12ada784-6bfc-487d-bb7d-d1e20b88a522")
+	)
+	(label "PWM_TOP_2"
+		(at 172.72 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2eb71ea9-5a14-4765-aa7d-02fe70c5bbe0")
+	)
+	(label "PWM_TOP_3"
+		(at 172.72 139.7 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "32d17d88-8ecd-4e57-a65c-4b318233880f")
+	)
+	(label "err_2"
+		(at 172.72 129.54 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3d944a8e-d606-43a3-a709-b423899ee802")
+	)
+	(label "PWM_BOT_1"
+		(at 210.82 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3e2dd0b1-3abd-4c98-80b4-d8018c70ec74")
+	)
+	(label "I_read_out"
+		(at 74.93 140.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "403bcd4f-af39-4be1-8b95-adb8213c487a")
+	)
+	(label "I_read_out"
+		(at 109.22 140.97 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "457b2171-0511-4232-8730-b1d45f0f2264")
+	)
+	(label "PWM_BOT_1"
+		(at 172.72 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "46f18437-2bde-4946-ac6b-ebf53cbe9e55")
+	)
+	(label "I_read_L2"
+		(at 74.93 128.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4a98a8a3-e1c9-40a4-8259-3eade2f1d350")
+	)
+	(label "V_read_out"
+		(at 109.22 115.57 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4ab06c72-7277-4d12-92a9-5fb3f90fc7de")
+	)
+	(label "V_read_out"
+		(at 74.93 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "81f640cf-1e6f-4d5d-8646-21b7ac7c8291")
+	)
+	(label "PWM_BOT_3"
+		(at 210.82 134.62 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8d434df2-017a-4f13-af64-2d053327ed21")
+	)
+	(label "V_read_in"
+		(at 74.93 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9003fdca-7565-4550-a0de-af56b63f2e32")
+	)
+	(label "I_read_L1"
+		(at 109.22 121.92 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9242d0e1-b3bc-4625-b329-404725ca798c")
+	)
+	(label "PWM_BOT_2"
+		(at 172.72 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9d99640f-4283-45f5-b635-47bafb53fc14")
+	)
+	(label "I_read_L3"
+		(at 109.22 134.62 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9ee98414-ad8d-46c3-89d5-cfc05f1e7a36")
+	)
+	(label "err_2"
+		(at 210.82 129.54 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9ef9c292-515f-41e0-9b0e-eb7ae0607d16")
+	)
+	(label "I_read_L1"
+		(at 74.93 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b9303fcd-d627-42f1-a0d3-baa1aee94615")
+	)
+	(label "PWM_TOP_1"
+		(at 172.72 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c396d701-3bd6-45ef-8f8c-c1ad058ecf15")
+	)
+	(label "err_3"
+		(at 210.82 144.78 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c559242b-8c54-4533-9bc8-e5fd255de8dd")
+	)
+	(label "PWM_BOT_2"
+		(at 210.82 119.38 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c9d05eb5-10b9-4700-b6af-6636b971ea91")
+	)
+	(label "V_read_in"
+		(at 109.22 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "cb99ddc6-c1d6-47f4-9543-9f5e3ec34bc9")
+	)
+	(label "I_read_L2"
+		(at 109.22 128.27 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d094feca-47e8-4f7b-b0ed-72d769b926cf")
+	)
+	(label "PWM_TOP_2"
+		(at 210.82 124.46 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d2342488-4b6b-4a0b-b6e4-41015523f110")
+	)
+	(label "err_1"
+		(at 172.72 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f0111957-1455-420e-adeb-52c889c1d46c")
+	)
+	(label "I_read_L3"
+		(at 74.93 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f21b2f32-264e-4a97-ba13-db476f3002dd")
+	)
+	(label "PWM_BOT_3"
+		(at 172.72 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f5e02baa-c243-4e1a-9297-40d0b8784464")
+	)
+	(label "err_3"
+		(at 172.72 144.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f84bceb6-9932-4155-9410-2e38e190ddfe")
+	)
+	(label "PWM_TOP_3"
+		(at 210.82 139.7 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fcdbb6c6-1b4b-4e08-8f2e-994b8ca8275d")
+	)
+	(sheet
+		(at 109.22 99.06)
+		(size 63.5 49.53)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "4527811a-768c-47d7-9d21-cc6f720fbe2a")
+		(property "Sheetname" "Microcontrolados e CAN"
+			(at 109.22 98.3484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "micros_CAN.kicad_sch"
+			(at 109.22 149.1746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "err_2" input
+			(at 172.72 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "dbb48a72-9fbe-40ec-a057-30d985ca6408")
+		)
+		(pin "PWM_BOT_1" input
+			(at 172.72 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "1a0ec4f2-5b06-4a6c-9363-7b03f5c297bf")
+		)
+		(pin "PWM_BOT_2" input
+			(at 172.72 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "f4e47cab-90c9-49cc-8d77-8457ae1e5c72")
+		)
+		(pin "PWM_TOP_1" input
+			(at 172.72 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "ceed5ccc-63c9-49b5-b9cf-fd423ceb90eb")
+		)
+		(pin "err_3" input
+			(at 172.72 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "97b48bf1-aaab-4809-a59f-8b91e21e1f12")
+		)
+		(pin "I_read_L3" input
+			(at 109.22 134.62 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "90fa054b-83e8-4d25-a4a9-3fa5f802ffa6")
+		)
+		(pin "I_read_L1" input
+			(at 109.22 121.92 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "8b8b8bd9-95de-442d-b6f6-9f616f23cf38")
+		)
+		(pin "I_read_out" input
+			(at 109.22 140.97 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "54eb109a-8758-4832-a00a-d1f95eed9fb1")
+		)
+		(pin "V_read_out" input
+			(at 109.22 115.57 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "672e291e-ce6a-48e0-8bff-133e6bad027e")
+		)
+		(pin "I_read_L2" input
+			(at 109.22 128.27 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "8d813452-72d6-44e3-bd8d-07e3523dd9a2")
+		)
+		(pin "V_read_in" input
+			(at 109.22 109.22 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "ac251b95-c3fc-429d-9b11-f0be456a327a")
+		)
+		(pin "err_1" input
+			(at 172.72 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "5917868a-d2ed-4d62-9ec2-21716b46c67f")
+		)
+		(pin "PWM_TOP_3" input
+			(at 172.72 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "a00c9b9e-c71e-4b9b-8af0-307e2d09b920")
+		)
+		(pin "PWM_TOP_2" input
+			(at 172.72 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "c5f9b227-d393-4b09-a858-140139644511")
+		)
+		(pin "PWM_BOT_3" input
+			(at 172.72 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "972ca6cd-8142-4f5b-b172-158e5588e758")
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b"
+					(page "16")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 210.82 99.06)
+		(size 54.61 49.53)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "4badf859-7634-4899-8760-3495612f97fd")
+		(property "Sheetname" "Adequação Sinais Driver"
+			(at 210.82 98.3484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "adequacao_sinais_driver.kicad_sch"
+			(at 210.82 149.1746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "PWM_BOT_3_micro" input
+			(at 210.82 139.7 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "09a6807f-e357-4f64-a13e-dfcc61d3ca3e")
+		)
+		(pin "err_3_micro" output
+			(at 210.82 144.78 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "84879f45-89c4-4692-bac0-c0ce69fd3b62")
+		)
+		(pin "PWM_TOP_3_micro" input
+			(at 210.82 134.62 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "72f04046-cd5f-4071-9876-fafe61c055ec")
+		)
+		(pin "PWM_BOT_1_micro" input
+			(at 210.82 109.22 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "f0ab78c1-6510-472b-b298-fe2b320588e2")
+		)
+		(pin "err_1_micro" output
+			(at 210.82 114.3 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "27ac5033-e8d9-4d78-8c13-f9951262ba44")
+		)
+		(pin "PWM_TOP_1_micro" input
+			(at 210.82 104.14 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "6f201aaa-f613-4ed9-b9c5-41284e1f8fae")
+		)
+		(pin "err_2_micro" output
+			(at 210.82 129.54 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "e0f523e9-fa28-40c8-91de-b3055cc36379")
+		)
+		(pin "PWM_BOT_2_micro" input
+			(at 210.82 124.46 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "83d2089b-e39c-4df3-a5cb-957e1bbb9e4e")
+		)
+		(pin "PWM_TOP_2_micro" input
+			(at 210.82 119.38 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "deba3d21-8852-4d5a-8ee9-8f2a306e81b8")
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b"
+					(page "17")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 33.02 99.06)
+		(size 41.91 49.53)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "64ed1ee1-6201-4cd1-840c-b46b599d55ab")
+		(property "Sheetname" "Adequação Sensores"
+			(at 33.02 98.3484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "adequacao_sensores.kicad_sch"
+			(at 33.02 149.1746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "R_filter" "1k"
+			(at 33.02 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "C_filter" "330n"
+			(at 33.02 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "V_read_out" output
+			(at 74.93 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "210f5bbd-0ea7-4eea-9859-d8c8e7f8360b")
+		)
+		(pin "V_read_in" output
+			(at 74.93 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "d6bb63ce-1450-4003-80ef-508591c99422")
+		)
+		(pin "I_read_L2" output
+			(at 74.93 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "85e5f445-b251-45fa-96d2-53c038371f24")
+		)
+		(pin "I_read_L3" output
+			(at 74.93 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "1308c05f-94b1-41ee-9f09-f62ad9444d35")
+		)
+		(pin "I_read_L1" output
+			(at 74.93 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "13d8f103-7347-41b8-a6ae-641d394a2ca2")
+		)
+		(pin "I_read_out" output
+			(at 74.93 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "2b50974f-67a2-42b3-b1d0-e7b748493c2a")
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 111.76 50.8)
+		(size 50.8 24.13)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "82d14b7f-e7c0-46b8-aff5-dc2713e8f15c")
+		(property "Sheetname" "Conectores"
+			(at 111.76 50.0884 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "conectores_alimentacao.kicad_sch"
+			(at 111.76 75.5146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)

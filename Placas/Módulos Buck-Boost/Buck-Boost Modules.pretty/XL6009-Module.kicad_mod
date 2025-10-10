@@ -1,0 +1,210 @@
+(footprint "XL6009-Module"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 21.59 -13.335 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "4c9fdea7-ba0c-45cc-8f66-240980c37d5c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "XL6009-Module"
+		(at 21.59 -11.43 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "c58960d9-4cac-4036-ad2e-1aef26946dae")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "874577ff-8c8d-4c82-9a01-8a0f7cea325f")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ebe0b9d0-a3bc-48d2-937a-c019300901fe")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "bcdfafe8-2b23-4490-a83a-8384559f835b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start 0 -21.082)
+		(end 43.18 -21.082)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "3662e68b-207e-47a3-930c-038dfd8202b6")
+	)
+	(fp_line
+		(start 0 0)
+		(end 0 -21.082)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e4df63e4-2a5a-405f-916a-ea67ff3a2b21")
+	)
+	(fp_line
+		(start 0 0)
+		(end 43.18 0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c9ab240f-b898-4113-9b58-995237cd751a")
+	)
+	(fp_line
+		(start 43.18 0)
+		(end 43.18 -21.082)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "efd79052-e146-4d61-9e0a-ba764a5a966b")
+	)
+	(fp_text user "OUT-"
+		(at 40.64 -3.81 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "32152384-5f30-4790-a5a7-40a77da6c53b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "OUT+"
+		(at 40.64 -17.145 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "48c77641-1046-44b0-bae8-52da953ea633")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "IN+"
+		(at 1.905 -16.51 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "5a43f40c-f75b-4db3-8642-220e4b806437")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "IN-"
+		(at 1.905 -3.81 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "91d0ac33-7c52-4428-ba83-8720a383522c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 21.59 -9.525 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "5b96c1ad-46ba-4366-8241-fbc1cd0e9bbd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at 1.8415 -19.1165)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "08e2d62f-f99a-4268-8b33-617dfcc63e75")
+	)
+	(pad "2" thru_hole circle
+		(at 1.8415 -1.9685)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "02165243-61a3-4857-84ba-71a77cb9a387")
+	)
+	(pad "3" thru_hole circle
+		(at 41.3385 -19.1165)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9d984d1b-8097-407f-92f3-3ef68867dcfa")
+	)
+	(pad "4" thru_hole circle
+		(at 41.3385 -1.9685)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0f3c9e3a-9c59-4881-b27a-d0e982b3ea8e")
+	)
+	(model "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/Módulos Buck-Boost/3d Models/XL6009.stp"
+		(offset
+			(xyz 21.6 10.5 2.54)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 0)
+		)
+	)
+)

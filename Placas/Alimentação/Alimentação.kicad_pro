@@ -78,7 +78,7 @@
         "footprint_symbol_mismatch": "warning",
         "footprint_type_mismatch": "ignore",
         "hole_clearance": "error",
-        "hole_near_hole": "error",
+        "hole_near_hole": "warning",
         "holes_co_located": "warning",
         "invalid_outline": "error",
         "isolated_copper": "warning",
@@ -445,7 +445,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "power board.kicad_pro",
+    "filename": "Alimentação.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -480,7 +480,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "Gerbers/",
+      "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -578,7 +578,7 @@
     },
     "net_format_name": "",
     "page_layout_descr_file": "",
-    "plot_directory": "./esquematico_alimentacao",
+    "plot_directory": "",
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
     "spice_model_current_sheet_as_root": true,
@@ -592,6 +592,30 @@
     [
       "a66ab151-18e3-44fa-8b10-f32a50ff2a79",
       "Root"
+    ],
+    [
+      "a16597ec-0be9-4bb9-86cc-8ed7be0e884a",
+      "Conversor 12 to 5V"
+    ],
+    [
+      "f52dd514-ccdf-4a34-8316-0d66dec1a789",
+      "Conversor 12 to 15V"
+    ],
+    [
+      "d0bed551-f4e5-4843-95bd-8307d1ffe43d",
+      "Conversor 12 to 15V - Simétrico"
+    ],
+    [
+      "5f40724c-2ef8-45e6-9dce-f12c833737b3",
+      "SEPIC_XL6012"
+    ],
+    [
+      "7e52b7f8-3529-4982-b0df-bdd06b8e16ba",
+      "SEPIC_XL6010"
+    ],
+    [
+      "6dbd06f9-0043-4804-b698-8f4038b025b3",
+      "SEPIC_XL6011"
     ]
   ],
   "text_variables": {}

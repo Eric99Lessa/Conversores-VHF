@@ -3655,7 +3655,7 @@
 			)
 		)
 		(property "Value" "XL6009"
-			(at 134.3025 124.46 0)
+			(at 131.064 127 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4990,7 +4990,7 @@
 				)
 			)
 		)
-		(property "Value" "~"
+		(property "Value" "Módulo XL6009"
 			(at 177.165 63.5 0)
 			(effects
 				(font

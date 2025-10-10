@@ -1,0 +1,128 @@
+(footprint "Msd1260t"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 2.75 -20.45 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "e62e5ee6-a650-4619-8eb0-54dd8615ed9c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "Msd1260t"
+		(at 2.75 -18.95 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "29664508-99f7-4515-920f-f958c394d465")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 2.75 -19.95 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "41c786cf-b720-4633-b0e5-2afee81bfa4b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 2.75 -19.95 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a1dd7777-7e69-4595-a19c-982261556f05")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 2.75 -19.95 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ac733d0e-c229-408f-b221-0a9cfe708d59")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -3.5 -12.5)
+		(end 9 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "27eaac00-8579-471e-8538-2d1261640cfd")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 2.75 -17.45 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "d9db64a3-0ada-417a-af88-3ba300f10629")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 4.5 -10.5)
+		(size 2 4)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "ccd23c2d-77e5-4d57-af6c-558771b5d53f")
+	)
+	(pad "2" smd rect
+		(at 1 -10.5)
+		(size 2 4)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "4e99a389-48b2-47da-9211-491b436b1af1")
+	)
+	(pad "3" smd rect
+		(at 1 -2)
+		(size 2 4)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "5015630f-db69-42ff-b0a8-9db0a727da51")
+	)
+	(pad "4" smd rect
+		(at 4.5 -2)
+		(size 2 4)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "0e8ae0af-dcc9-4eca-aac9-dbb128ca6db8")
+	)
+	(model "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/Indutores Acoplados/Coupled_inductors.pretty/3d Models/Coilcraft-MSD1260T.STEP"
+		(offset
+			(xyz 2.54 6.35 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 0)
+		)
+	)
+)

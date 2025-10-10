@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Espressif")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/espressif-kicad-addon/symbols/Espressif.kicad_sym")(options "")(descr ""))
+  (lib (name "CAN Modules")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/CAN Modules/CAN_modules.kicad_sym")(options "")(descr ""))
+)
