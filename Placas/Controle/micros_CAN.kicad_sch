@@ -1591,10 +1591,34 @@
 		(uuid "0b3b36bb-6088-4823-8bbe-54a65a3ae242")
 	)
 	(junction
+		(at 252.73 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "12ed725f-b846-4ac8-a606-15c388ea19e2")
+	)
+	(junction
+		(at 128.27 80.01)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "52865e4d-3db6-4899-93f6-217a706fbc34")
+	)
+	(junction
 		(at 130.81 152.4)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "81f6d001-0e78-4edd-b66c-721fd2f289ff")
+	)
+	(junction
+		(at 252.73 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "dc8d147b-565c-4827-aa14-79487a4d6574")
+	)
+	(junction
+		(at 128.27 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f155d36c-dd72-483f-90d4-45a38fc668fd")
 	)
 	(no_connect
 		(at 210.82 50.8)
@@ -1619,6 +1643,16 @@
 			(type default)
 		)
 		(uuid "10196620-1c76-4350-8542-796267497d9f")
+	)
+	(wire
+		(pts
+			(xy 128.27 80.01) (xy 140.97 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b847148-685a-4906-80fc-4270f33f41e7")
 	)
 	(wire
 		(pts
@@ -1662,6 +1696,16 @@
 	)
 	(wire
 		(pts
+			(xy 252.73 88.9) (xy 264.16 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "824d9d04-99d7-413b-b2d5-8c82ae58fc51")
+	)
+	(wire
+		(pts
 			(xy 115.57 142.24) (xy 115.57 140.97)
 		)
 		(stroke
@@ -1669,6 +1713,16 @@
 			(type default)
 		)
 		(uuid "a1971d3f-4015-460f-b0be-1802e86579c3")
+	)
+	(wire
+		(pts
+			(xy 128.27 87.63) (xy 140.97 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a1abd4d2-7fdd-49bc-ae45-631880fc6508")
 	)
 	(wire
 		(pts
@@ -1709,6 +1763,16 @@
 			(type default)
 		)
 		(uuid "c0802168-ac54-4db6-b2e7-28c0f4d0b46e")
+	)
+	(wire
+		(pts
+			(xy 252.73 81.28) (xy 264.16 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4031ee6-d0d5-41f4-8e58-b51e1edfaa21")
 	)
 	(wire
 		(pts
@@ -2095,7 +2159,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "17ce7b4d-8601-4e1d-b829-28b2a97ad22e")
-		(property "Reference" "#PWR68"
+		(property "Reference" "#PWR70"
 			(at 252.73 95.25 0)
 			(effects
 				(font
@@ -2145,13 +2209,83 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR68")
+					(reference "#PWR70")
 					(unit 1)
 				)
 			)
 			(project "board"
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/85e82378-f844-4e03-b3e7-02e0055a7dbe"
 					(reference "#PWR80")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 264.16 85.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "27870281-fe5c-4ba7-91b4-1d73e8ac9f3c")
+		(property "Reference" "C20"
+			(at 267.97 83.8199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u"
+			(at 267.97 86.3599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
+			(at 265.1252 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 264.16 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 264.16 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c2ad988d-ce97-4e6b-b5d3-8220a872d87f")
+		)
+		(pin "2"
+			(uuid "8c63b213-c7cd-4e34-9f56-0858ede5e215")
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
+					(reference "C20")
 					(unit 1)
 				)
 			)
@@ -2167,7 +2301,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2bf480a6-7004-4682-8f2f-5e7b5a1e9ecc")
-		(property "Reference" "#PWR61"
+		(property "Reference" "#PWR63"
 			(at 128.27 83.82 0)
 			(effects
 				(font
@@ -2217,7 +2351,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR61")
+					(reference "#PWR63")
 					(unit 1)
 				)
 			)
@@ -2681,7 +2815,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4189ec33-4e3d-4330-99a1-bf3a75265acc")
-		(property "Reference" "#PWR65"
+		(property "Reference" "#PWR67"
 			(at 205.74 53.34 0)
 			(effects
 				(font
@@ -2731,7 +2865,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR65")
+					(reference "#PWR67")
 					(unit 1)
 				)
 			)
@@ -2753,7 +2887,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "449089e8-6ec5-4977-99bc-53c14a095ac1")
-		(property "Reference" "C14"
+		(property "Reference" "C16"
 			(at 119.38 144.7799 0)
 			(effects
 				(font
@@ -2771,7 +2905,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 116.5352 149.86 0)
 			(effects
 				(font
@@ -2807,7 +2941,7 @@
 		(instances
 			(project ""
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "C14")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -2829,7 +2963,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4bb620ba-168d-49cc-8f9c-fd435b86453b")
-		(property "Reference" "#PWR59"
+		(property "Reference" "#PWR61"
 			(at 78.74 130.81 0)
 			(effects
 				(font
@@ -2879,7 +3013,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR59")
+					(reference "#PWR61")
 					(unit 1)
 				)
 			)
@@ -2901,7 +3035,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "74fe92e0-71c7-4ed0-ba05-488493954b6a")
-		(property "Reference" "#PWR58"
+		(property "Reference" "#PWR60"
 			(at 76.2 52.07 0)
 			(effects
 				(font
@@ -2951,7 +3085,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR58")
+					(reference "#PWR60")
 					(unit 1)
 				)
 			)
@@ -2973,7 +3107,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "81ada4c7-a9e9-4516-8f92-9222abb89526")
-		(property "Reference" "#PWR66"
+		(property "Reference" "#PWR68"
 			(at 208.28 132.08 0)
 			(effects
 				(font
@@ -3023,7 +3157,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR66")
+					(reference "#PWR68")
 					(unit 1)
 				)
 			)
@@ -3045,7 +3179,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "88e13460-e04e-412b-9b73-b4ab8ac467f1")
-		(property "Reference" "#PWR67"
+		(property "Reference" "#PWR69"
 			(at 252.73 85.09 0)
 			(effects
 				(font
@@ -3095,7 +3229,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR67")
+					(reference "#PWR69")
 					(unit 1)
 				)
 			)
@@ -3194,6 +3328,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 140.97 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b560c259-e269-4b44-9744-6d8ff1a7082a")
+		(property "Reference" "C18"
+			(at 144.78 82.5499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u"
+			(at 144.78 85.0899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
+			(at 141.9352 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 140.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 140.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4b3bc572-b637-44de-9d26-04d832fe5ecc")
+		)
+		(pin "2"
+			(uuid "834a4d5c-09a0-4555-84d9-bb941dec8775")
+		)
+		(instances
+			(project "Controle"
+				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
+					(reference "C18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 130.81 152.4 0)
 		(unit 1)
@@ -3203,7 +3407,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bd25fed9-d7ab-4cbb-9a07-8dc45771e404")
-		(property "Reference" "#PWR64"
+		(property "Reference" "#PWR66"
 			(at 130.81 158.75 0)
 			(effects
 				(font
@@ -3253,7 +3457,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR64")
+					(reference "#PWR66")
 					(unit 1)
 				)
 			)
@@ -3275,7 +3479,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c7276562-6f88-4bac-b8e1-f7bbcd26344b")
-		(property "Reference" "C15"
+		(property "Reference" "C17"
 			(at 132.08 82.5499 0)
 			(effects
 				(font
@@ -3293,7 +3497,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 129.2352 87.63 0)
 			(effects
 				(font
@@ -3329,7 +3533,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "C15")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -3351,7 +3555,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0a1e44b-3bb9-4248-9991-a2697d439096")
-		(property "Reference" "C16"
+		(property "Reference" "C19"
 			(at 256.54 83.8199 0)
 			(effects
 				(font
@@ -3369,7 +3573,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 253.6952 88.9 0)
 			(effects
 				(font
@@ -3405,7 +3609,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "C16")
+					(reference "C19")
 					(unit 1)
 				)
 			)
@@ -3427,7 +3631,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d16255d9-1f3c-46a1-9149-508bf6149240")
-		(property "Reference" "#PWR63"
+		(property "Reference" "#PWR65"
 			(at 130.81 144.78 0)
 			(effects
 				(font
@@ -3477,7 +3681,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR63")
+					(reference "#PWR65")
 					(unit 1)
 				)
 			)
@@ -3499,7 +3703,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d2509911-dc38-4280-8db9-e3a609b47a28")
-		(property "Reference" "#PWR60"
+		(property "Reference" "#PWR62"
 			(at 83.82 52.07 0)
 			(effects
 				(font
@@ -3549,7 +3753,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR60")
+					(reference "#PWR62")
 					(unit 1)
 				)
 			)
@@ -3571,7 +3775,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "db4ee230-3f53-4281-84b7-b1cffb27e386")
-		(property "Reference" "#PWR62"
+		(property "Reference" "#PWR64"
 			(at 128.27 93.98 0)
 			(effects
 				(font
@@ -3621,7 +3825,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/4527811a-768c-47d7-9d21-cc6f720fbe2a"
-					(reference "#PWR62")
+					(reference "#PWR64")
 					(unit 1)
 				)
 			)

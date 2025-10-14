@@ -1277,7 +1277,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "76ddcc72-c64b-42dd-8317-88f3288acb52")
-		(property "Reference" "#PWR9"
+		(property "Reference" "#PWR11"
 			(at 184.15 49.53 0)
 			(effects
 				(font
@@ -1327,7 +1327,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab"
-					(reference "#PWR9")
+					(reference "#PWR11")
 					(unit 1)
 				)
 			)
@@ -1477,7 +1477,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 199.0852 49.53 0)
 			(effects
 				(font
@@ -1535,7 +1535,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aebb8db9-748a-481b-8e70-8949ebadfa36")
-		(property "Reference" "#PWR8"
+		(property "Reference" "#PWR10"
 			(at 184.15 41.91 0)
 			(effects
 				(font
@@ -1585,7 +1585,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab"
-					(reference "#PWR8")
+					(reference "#PWR10")
 					(unit 1)
 				)
 			)
@@ -2670,7 +2670,16 @@
 				(hide yes)
 			)
 		)
-		(property "C_sensor" "0,1u"
+		(property "C_sensor_1" "0,1u"
+			(at 41.91 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "C_sensor_2" "4,7u"
 			(at 41.91 50.8 0)
 			(effects
 				(font
@@ -2951,7 +2960,16 @@
 				(hide yes)
 			)
 		)
-		(property "C_sensor" "0,1u"
+		(property "C_sensor_1" "0,1u"
+			(at 41.91 21.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "C_sensor_2" "4,7u"
 			(at 41.91 21.59 0)
 			(effects
 				(font

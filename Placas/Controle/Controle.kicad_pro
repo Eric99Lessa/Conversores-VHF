@@ -648,48 +648,48 @@
       "Conectores - PWM e erro"
     ],
     [
-      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
-      "Isolação de sinais - Erro3"
-    ],
-    [
-      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
-      "Isolação de sinais - PWM6"
-    ],
-    [
-      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
-      "Isolação de sinais - PWM7"
-    ],
-    [
       "f0530d57-4207-4b28-8d03-9cc33be1a412",
       "Conectores - PWM e erro1"
-    ],
-    [
-      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
-      "Isolação de sinais - Erro3"
-    ],
-    [
-      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
-      "Isolação de sinais - PWM6"
-    ],
-    [
-      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
-      "Isolação de sinais - PWM7"
     ],
     [
       "89eae5c2-3bab-4caa-9966-8abf6d8721dc",
       "Conectores - PWM e erro2"
     ],
     [
-      "80c37905-981e-40ed-8bc4-c6bd1141d6f2",
-      "Isolação de sinais - Erro3"
+      "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
+      "Adequação Sinais - Erro"
     ],
     [
-      "5da069ac-05b1-4f3e-ad61-a70e453a9532",
-      "Isolação de sinais - PWM6"
+      "570883b2-0ce1-4821-a2e9-7d6cd0630692",
+      "Adequação Sinais - PWM"
     ],
     [
-      "41dbf626-0ed1-42f1-8364-05e30904a0c8",
-      "Isolação de sinais - PWM7"
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
+    ],
+    [
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
+    ],
+    [
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
+    ],
+    [
+      "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
+      "Adequação Sinais - Erro"
+    ],
+    [
+      "570883b2-0ce1-4821-a2e9-7d6cd0630692",
+      "Adequação Sinais - PWM"
+    ],
+    [
+      "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
+      "Adequação Sinais - Erro"
+    ],
+    [
+      "570883b2-0ce1-4821-a2e9-7d6cd0630692",
+      "Adequação Sinais - PWM"
     ]
   ],
   "text_variables": {}
