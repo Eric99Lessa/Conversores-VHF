@@ -403,4 +403,15 @@
 			(xyz 0 0 0)
 		)
 	)
+	(model "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/CAN Modules/3D Models/TJA1050.STEP"
+		(offset
+			(xyz 11.295 -5.715 2.54)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

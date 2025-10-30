@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 0.8,
+          "height": 1.6,
+          "width": 1.6
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -51,7 +51,13 @@
           "min_clearance": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -62,7 +68,7 @@
         "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
-        "courtyards_overlap": "error",
+        "courtyards_overlap": "warning",
         "diff_pair_gap_out_of_range": "error",
         "diff_pair_uncoupled_length_too_long": "error",
         "drill_out_of_range": "error",
@@ -161,7 +167,7 @@
         },
         {
           "td_allow_use_two_tracks": true,
-          "td_curve_segcount": 0,
+          "td_curve_segcount": 5,
           "td_height_ratio": 1.0,
           "td_length_ratio": 0.5,
           "td_maxheight": 2.0,
@@ -171,7 +177,10 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        1.0
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -198,7 +207,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -416,7 +430,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "ignore",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
       "simulation_model_issue": "ignore",
@@ -466,7 +480,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "Placa Controle/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -600,15 +614,15 @@
       "adequacao_sensor_corrente"
     ],
     [
-      "6bc42b43-1f09-4868-86cc-13b6bc39566b",
+      "8995cb88-c183-4fd4-85c3-f25ace0b158f",
       "adequacao_sensor_corrente1"
     ],
     [
-      "0ec4e805-f770-43f6-9ceb-79230d0ce8bc",
+      "c280b51b-6e03-472d-b6d8-cc95bc8d3621",
       "adequacao_sensor_corrente2"
     ],
     [
-      "23b832df-fa68-4730-aab0-9fb63a0aaa4a",
+      "26f8c0ab-b00d-4671-b4fc-7e2f9d2fe211",
       "adequacao_sensor_corrente3"
     ],
     [
@@ -648,11 +662,23 @@
       "Conectores - PWM e erro"
     ],
     [
-      "f0530d57-4207-4b28-8d03-9cc33be1a412",
+      "8dc5e02a-820d-46fa-a29a-1b06a2e85f06",
       "Conectores - PWM e erro1"
     ],
     [
-      "89eae5c2-3bab-4caa-9966-8abf6d8721dc",
+      "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
+      "Adequação Sinais - Erro"
+    ],
+    [
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
+    ],
+    [
+      "570883b2-0ce1-4821-a2e9-7d6cd0630692",
+      "Adequação Sinais - PWM"
+    ],
+    [
+      "85640af9-3c56-4a5e-9eff-4e92d4f132b9",
       "Conectores - PWM e erro2"
     ],
     [
@@ -660,20 +686,20 @@
       "Adequação Sinais - Erro"
     ],
     [
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
+    ],
+    [
       "570883b2-0ce1-4821-a2e9-7d6cd0630692",
       "Adequação Sinais - PWM"
     ],
     [
-      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
-      "Adequação Sinais - PWM1"
+      "8a978c35-96f6-4484-acf4-75c99b919278",
+      "ESP32 e Capacitores1"
     ],
     [
-      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
-      "Adequação Sinais - PWM1"
-    ],
-    [
-      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
-      "Adequação Sinais - PWM1"
+      "4b666a93-d424-4e37-95e1-2f2a716219cf",
+      "ESP32 e Capacitores"
     ],
     [
       "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
@@ -684,12 +710,8 @@
       "Adequação Sinais - PWM"
     ],
     [
-      "84d61ec8-e9e5-4da4-b009-e86fb4fe152b",
-      "Adequação Sinais - Erro"
-    ],
-    [
-      "570883b2-0ce1-4821-a2e9-7d6cd0630692",
-      "Adequação Sinais - PWM"
+      "5200a6b2-26ae-4fe0-9b47-84b4d1c1f69c",
+      "Adequação Sinais - PWM1"
     ]
   ],
   "text_variables": {}

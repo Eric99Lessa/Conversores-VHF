@@ -63,26 +63,6 @@
 	)
 	(attr through_hole)
 	(fp_line
-		(start -1.555 -1.835)
-		(end -1.555 19.615)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "8c7f2399-fc40-4219-b7af-36aa8b64e7cb")
-	)
-	(fp_line
-		(start -1.555 19.615)
-		(end 42.195 19.615)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "729ebebf-3d3c-43e1-9fa9-529e03367fa0")
-	)
-	(fp_line
 		(start -1.55 -1.58)
 		(end -0.25 -1.58)
 		(stroke
@@ -201,46 +181,6 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "8d714aaf-dea7-4b93-bc13-518c5b540d8f")
-	)
-	(fp_line
-		(start 42.195 -1.835)
-		(end -1.555 -1.835)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "0e02b7fb-735f-483c-a1df-cf3d28b12913")
-	)
-	(fp_line
-		(start 42.195 19.615)
-		(end 42.195 -1.835)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "71efcc08-1c69-4727-b468-fdbe38a2ac1a")
-	)
-	(fp_line
-		(start -1.48 -1.76)
-		(end -1.48 19.54)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "167e37dd-5d69-4054-a682-9ba7afc36475")
-	)
-	(fp_line
-		(start -1.48 19.54)
-		(end 42.12 19.54)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "044adb07-eb81-4b51-823e-381885068126")
 	)
 	(fp_line
 		(start -1.27 -0.635)
@@ -411,26 +351,6 @@
 		)
 		(layer "F.Fab")
 		(uuid "51fd3f1d-81ee-4b34-94eb-009522a7904a")
-	)
-	(fp_line
-		(start 42.12 -1.76)
-		(end -1.48 -1.76)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "7e101e94-0095-4aa9-b76f-1ef44e35c7ce")
-	)
-	(fp_line
-		(start 42.12 19.54)
-		(end 42.12 -1.76)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "d8061721-cdd6-40d6-b320-a19f9f2a2039")
 	)
 	(fp_text user "REF**"
 		(at 21.59 8.89 0)

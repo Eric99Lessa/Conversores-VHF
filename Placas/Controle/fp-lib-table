@@ -3,4 +3,6 @@
   (lib (name "Espressif")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/espressif-kicad-addon/footprints/Espressif.pretty")(options "")(descr ""))
   (lib (name "CAN Modules")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/CAN Modules/footprints/CAN Modules.pretty")(options "")(descr ""))
   (lib (name "Minifit")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/Conectores/Minifit.pretty")(options "")(descr ""))
+  (lib (name "Logos")(type "KiCad")(uri "${KIPRJMOD}/Logos.pretty")(options "")(descr ""))
+  (lib (name "IDC Connectors")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/Placas/Conectores/Ribbon.pretty")(options "")(descr ""))
 )

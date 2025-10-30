@@ -1083,18 +1083,6 @@
 		(color 0 0 0 0)
 		(uuid "2bc52271-cb08-4b9c-b3a8-85aa263654ef")
 	)
-	(junction
-		(at 161.29 71.12)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c9c3b810-e562-4ccf-9489-5d5f0e8f1025")
-	)
-	(junction
-		(at 161.29 78.74)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f9289e6a-0e9c-42ea-808d-a801df345782")
-	)
 	(wire
 		(pts
 			(xy 120.65 73.66) (xy 120.65 72.39)
@@ -1114,16 +1102,6 @@
 			(type default)
 		)
 		(uuid "1b56ed67-ae8d-4928-b7c4-2f8fd2aa05f3")
-	)
-	(wire
-		(pts
-			(xy 161.29 78.74) (xy 175.26 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21a14e24-be61-446c-bf77-2230f2b1b935")
 	)
 	(wire
 		(pts
@@ -1157,33 +1135,23 @@
 	)
 	(wire
 		(pts
-			(xy 85.09 69.85) (xy 88.9 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6c23865a-f267-455d-90f5-00e196a5d9f9")
-	)
-	(wire
-		(pts
 			(xy 74.93 69.85) (xy 77.47 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9038c3b5-5c3b-4429-aca8-65f8758846e9")
+		(uuid "982b1f38-3391-4240-98d2-29304fd60097")
 	)
 	(wire
 		(pts
-			(xy 161.29 71.12) (xy 175.26 71.12)
+			(xy 85.09 69.85) (xy 88.9 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "c3bb5c5b-7869-4086-93d4-df99f6fca9b9")
+		(uuid "c4317894-c480-49db-80b7-a2aef5ab2ce4")
 	)
 	(wire
 		(pts
@@ -1242,7 +1210,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0614_L14.3mm_D5.7mm_P5.08mm_Vertical"
 			(at 71.12 71.628 90)
 			(effects
 				(font
@@ -1308,7 +1276,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0b0d74b3-e5c5-4188-856e-ad83aac67dd9")
-		(property "Reference" "#PWR20"
+		(property "Reference" "#PWR26"
 			(at 161.29 74.93 0)
 			(effects
 				(font
@@ -1358,11 +1326,11 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR20")
+					(reference "#PWR26")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR15")
+					(reference "#PWR21")
 					(unit 1)
 				)
 			)
@@ -1455,80 +1423,6 @@
 				)
 				(path "/d7be55ed-3561-4de6-aa99-76e883d44fb9/484b45ac-854b-4808-a94a-82052b89ba4d/d6523acf-4a35-49b3-8df2-392463f7dfc0"
 					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 175.26 74.93 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1d5453e4-26f6-44c5-802c-4ae602ba2a12")
-		(property "Reference" "C5"
-			(at 179.07 73.6599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "${C_sensor_2}"
-			(at 179.07 76.1999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
-			(at 176.2252 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 175.26 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 175.26 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9abd6461-a721-4ba0-bd1a-4658e2d1063d")
-		)
-		(pin "2"
-			(uuid "d92e3be3-e87f-4d6f-842b-4ef25e85fabf")
-		)
-		(instances
-			(project "Controle"
-				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "C5")
-					(unit 1)
-				)
-				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -1635,7 +1529,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "30abe896-883e-471b-96c3-bdb290ff1eda")
-		(property "Reference" "#PWR17"
+		(property "Reference" "#PWR23"
 			(at 99.06 68.58 0)
 			(effects
 				(font
@@ -1685,11 +1579,11 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR17")
+					(reference "#PWR23")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR12")
+					(reference "#PWR18")
 					(unit 1)
 				)
 			)
@@ -1733,7 +1627,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 122.428 77.47 90)
 			(effects
 				(font
@@ -1799,7 +1693,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "670e5c86-c32d-480f-a7d0-0ef35924384f")
-		(property "Reference" "C4"
+		(property "Reference" "C3"
 			(at 165.1 73.6599 0)
 			(effects
 				(font
@@ -1817,7 +1711,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D8.0mm_W5.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 162.2552 78.74 0)
 			(effects
 				(font
@@ -1853,7 +1747,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "C4")
+					(reference "C3")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
@@ -1875,7 +1769,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 81.28 69.85 90)
+		(at 81.28 69.85 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1899,8 +1793,8 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
-			(at 81.28 71.628 90)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0516_L15.5mm_D5.0mm_P5.08mm_Vertical"
+			(at 81.28 68.072 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1965,7 +1859,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94c05143-6933-4d87-a8d0-fd32f578a7d7")
-		(property "Reference" "#PWR18"
+		(property "Reference" "#PWR24"
 			(at 99.06 76.2 0)
 			(effects
 				(font
@@ -2015,11 +1909,11 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR18")
+					(reference "#PWR24")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR13")
+					(reference "#PWR19")
 					(unit 1)
 				)
 			)
@@ -2045,7 +1939,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a31fe0f0-974c-4c89-8da3-7c2f07238b51")
-		(property "Reference" "#PWR19"
+		(property "Reference" "#PWR25"
 			(at 120.65 90.17 0)
 			(effects
 				(font
@@ -2095,11 +1989,11 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR19")
+					(reference "#PWR25")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR14")
+					(reference "#PWR20")
 					(unit 1)
 				)
 			)
@@ -2125,7 +2019,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "be26c961-a37a-42d5-ae3b-7885c5d10f73")
-		(property "Reference" "#PWR21"
+		(property "Reference" "#PWR27"
 			(at 161.29 74.93 0)
 			(effects
 				(font
@@ -2175,11 +2069,11 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/9701d4b2-9f70-4dc2-8f65-3cb2cc418c7b"
-					(reference "#PWR21")
+					(reference "#PWR27")
 					(unit 1)
 				)
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/64ed1ee1-6201-4cd1-840c-b46b599d55ab/d6523acf-4a35-49b3-8df2-392463f7dfc0"
-					(reference "#PWR16")
+					(reference "#PWR22")
 					(unit 1)
 				)
 			)

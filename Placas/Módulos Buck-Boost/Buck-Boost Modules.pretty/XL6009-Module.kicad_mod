@@ -64,46 +64,6 @@
 		)
 	)
 	(attr through_hole)
-	(fp_line
-		(start 0 -21.082)
-		(end 43.18 -21.082)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "3662e68b-207e-47a3-930c-038dfd8202b6")
-	)
-	(fp_line
-		(start 0 0)
-		(end 0 -21.082)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "e4df63e4-2a5a-405f-916a-ea67ff3a2b21")
-	)
-	(fp_line
-		(start 0 0)
-		(end 43.18 0)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "c9ab240f-b898-4113-9b58-995237cd751a")
-	)
-	(fp_line
-		(start 43.18 0)
-		(end 43.18 -21.082)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "Dwgs.User")
-		(uuid "efd79052-e146-4d61-9e0a-ba764a5a966b")
-	)
 	(fp_text user "OUT-"
 		(at 45.45 -2 0)
 		(unlocked yes)

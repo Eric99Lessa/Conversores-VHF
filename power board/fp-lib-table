@@ -1,6 +1,0 @@
-(fp_lib_table
-  (version 7)
-  (lib (name "Modules")(type "KiCad")(uri "${KIPRJMOD}/Modules.pretty")(options "")(descr ""))
-  (lib (name "KiCad")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/lm2596-model-for-kicad-1.snapshot.12/KiCad")(options "")(descr ""))
-  (lib (name "Coupled_inductors")(type "KiCad")(uri "${KIPRJMOD}/Coupled_inductors.pretty")(options "")(descr ""))
-)

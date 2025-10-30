@@ -1,6 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "Modules")(type "KiCad")(uri "${KIPRJMOD}/Modules.kicad_sym")(options "")(descr ""))
-  (lib (name "yaaj_dcdc_stepdown_lm2596")(type "Legacy")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/lm2596-model-for-kicad-1.snapshot.12/KiCad/yaaj_dcdc_stepdown_lm2596.lib")(options "")(descr ""))
-  (lib (name "xl6009_module")(type "KiCad")(uri "/home/eric/Documents/Poli/VHF/Instrumentação e Controle de Conversores/XL6009_Module/xl6009_module.kicad_sym")(options "")(descr ""))
-)
