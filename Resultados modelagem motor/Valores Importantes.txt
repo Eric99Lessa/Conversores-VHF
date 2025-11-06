@@ -1,0 +1,16 @@
+J=0,003003 [kgm2]
+
+
+FrictionTorque= b0 + b1 * w
+b0= 4,9359 Nm
+b1=0,0043 Nms/rad
+
+theta_idle=11 graus
+
+RPM_idle=1800 rpm;
+RPM_max=8400 rpm;
+
+
+Torque=f(RPM,theta(t-0,053))
+Delay=0,053 s
+

@@ -1,0 +1,16 @@
+"Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
+1;"C2,C17,C10,C6,C15,C12,C5";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";7;"1u";;;
+2;"C16,C4,C11,C3";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";4;"22u";;;
+3;"D3,D1,D2,D4";"D_SMA_Handsoldering";4;"SS14";;;
+4;"U3,U5,U4";"TO-263-5_TabPin3";3;"XL6009";;;
+5;"R1,R2";"R_0805_2012Metric_Pad1.20x1.40mm_HandSolder";2;"1k5";;;
+6;"U2";"XL6009-Module";1;"Módulo XL6009";;;
+7;"L2,L1,L4,L3";"Msd1260t";4;"MSD1260t";;;
+8;"C7,C14,C18,C8,C1,C13,C9";"CP_Elec_8x10.5";7;"220u";;;
+9;"J1,J3";"Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical";2;"Conn_02x02_ZigZag";;;
+10;"J17,J16,J13,J14,J15";"PinHeader_1x01_P2.54mm_Vertical";5;"Conn_01x01_Pin";;;
+11;"R6,R9,R5,R8,R3";"R_0805_2012Metric_Pad1.20x1.40mm_HandSolder";5;"1k";;;
+12;"U1";"YAAJ_DCDC_StepDown_LM2596";1;"YAAJ_DCDC_StepDown_LM2596";;;
+13;"R4,R7";"R_0805_2012Metric_Pad1.20x1.40mm_HandSolder";2;"10k";;;
+14;"J2";"Molex_Mini-Fit_Jr_5566-06A_2x03_P4.20mm_Vertical";1;"Conn_02x03_ZigZag";;;
+15;"J4";"Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical";1;"Conn_02x01";;;
