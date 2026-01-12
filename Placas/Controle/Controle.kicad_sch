@@ -215,16 +215,16 @@
 		(uuid "0f31059b-a471-4d7f-8270-2fa988beb35e")
 	)
 	(label "PWM_TOP_1"
-		(at 210.82 109.22 180)
+		(at 210.82 104.14 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "12ada784-6bfc-487d-bb7d-d1e20b88a522")
+		(uuid "11863c6b-3496-4954-89b2-58e934b8d0fe")
 	)
-	(label "PWM_TOP_2"
+	(label "PWM_BOT_2"
 		(at 172.72 124.46 0)
 		(effects
 			(font
@@ -232,7 +232,17 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "2eb71ea9-5a14-4765-aa7d-02fe70c5bbe0")
+		(uuid "2b61a2ac-eb29-47f3-9ebd-4951af8de472")
+	)
+	(label "PWM_BOT_1"
+		(at 172.72 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2cb97ea5-b829-4540-b888-4a964733d504")
 	)
 	(label "PWM_TOP_3"
 		(at 172.72 139.7 0)
@@ -254,16 +264,6 @@
 		)
 		(uuid "3d944a8e-d606-43a3-a709-b423899ee802")
 	)
-	(label "PWM_BOT_1"
-		(at 210.82 104.14 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "3e2dd0b1-3abd-4c98-80b4-d8018c70ec74")
-	)
 	(label "I_read_out"
 		(at 74.93 140.97 0)
 		(effects
@@ -284,15 +284,15 @@
 		)
 		(uuid "457b2171-0511-4232-8730-b1d45f0f2264")
 	)
-	(label "PWM_BOT_1"
-		(at 172.72 104.14 0)
+	(label "PWM_TOP_2"
+		(at 210.82 119.38 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "46f18437-2bde-4946-ac6b-ebf53cbe9e55")
+		(uuid "482c0f02-c45e-4478-bbfd-c43456002756")
 	)
 	(label "I_read_L2"
 		(at 74.93 128.27 0)
@@ -313,6 +313,26 @@
 			(justify right bottom)
 		)
 		(uuid "4ab06c72-7277-4d12-92a9-5fb3f90fc7de")
+	)
+	(label "PWM_TOP_1"
+		(at 172.72 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "65adbf1e-48b2-4525-a2da-b8cd1864ec76")
+	)
+	(label "PWM_BOT_2"
+		(at 210.82 124.46 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "685f18bb-cfd5-46b2-a8b3-ad18954691e3")
 	)
 	(label "V_read_out"
 		(at 74.93 115.57 0)
@@ -354,16 +374,6 @@
 		)
 		(uuid "9242d0e1-b3bc-4625-b329-404725ca798c")
 	)
-	(label "PWM_BOT_2"
-		(at 172.72 119.38 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9d99640f-4283-45f5-b635-47bafb53fc14")
-	)
 	(label "I_read_L3"
 		(at 109.22 134.62 180)
 		(effects
@@ -394,15 +404,15 @@
 		)
 		(uuid "b9303fcd-d627-42f1-a0d3-baa1aee94615")
 	)
-	(label "PWM_TOP_1"
-		(at 172.72 109.22 0)
+	(label "PWM_BOT_1"
+		(at 210.82 109.22 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "c396d701-3bd6-45ef-8f8c-c1ad058ecf15")
+		(uuid "c4ecf84e-b528-496b-9527-407bee2e7284")
 	)
 	(label "err_3"
 		(at 210.82 144.78 180)
@@ -414,16 +424,6 @@
 		)
 		(uuid "c559242b-8c54-4533-9bc8-e5fd255de8dd")
 	)
-	(label "PWM_BOT_2"
-		(at 210.82 119.38 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c9d05eb5-10b9-4700-b6af-6636b971ea91")
-	)
 	(label "V_read_in"
 		(at 109.22 109.22 180)
 		(effects
@@ -434,6 +434,16 @@
 		)
 		(uuid "cb99ddc6-c1d6-47f4-9543-9f5e3ec34bc9")
 	)
+	(label "PWM_TOP_2"
+		(at 172.72 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cda5078b-71ca-402a-ba19-93273b5bf8b7")
+	)
 	(label "I_read_L2"
 		(at 109.22 128.27 180)
 		(effects
@@ -443,16 +453,6 @@
 			(justify right bottom)
 		)
 		(uuid "d094feca-47e8-4f7b-b0ed-72d769b926cf")
-	)
-	(label "PWM_TOP_2"
-		(at 210.82 124.46 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d2342488-4b6b-4a0b-b6e4-41015523f110")
 	)
 	(label "err_1"
 		(at 172.72 114.3 0)

@@ -1,3 +1,4 @@
+clear; clc;
 %% Parametros do circuito
 %% PWM
 f = 20e3; % Hz
@@ -23,17 +24,22 @@ C_out_esr = 29e-3; % ohm
 
 %% Indutores
 L = 80e-3; % H - Conferir unidade no simulink
-R_L = 1e-6; % ohm - Conferir unidade no simulink
+R_L = 1e-3; % ohm - Conferir unidade no simulink
 
 %% Controle
-Kr = 1;
-Kj = 1;
-Ki = 1;
+% -R_ind + L*tau > 0
+% L*tau > R_ind
+% tau > R_ind/L
+tau_min = R_L/L;
+tau = tau_min;
+Kr = function_Kr(L, R_L, tau);
+Kj = function_Kj(C_out, Kr, L, R_L);
 
 %% Simulação
-Tend = 0.5;
-R_load = 10;
-voltage_source = "GeneratorRectified";
+Tend = 1;
+R_load = 100;
+% voltage_source = "GeneratorRectified";
+voltage_source = "DC";
 
 out = sim("feedback_control.slx");
 
@@ -56,7 +62,12 @@ ylabel("Corrente (A)")
 
 id_fig = id_fig + 1;
 figure(id_fig)
-
 plot(out.tout, out.I_load, 'lineWidth', 2);
 xlabel("Tempo (s)")
 ylabel("Corrente (A)")
+
+% id_fig = id_fig + 1;
+% figure(id_fig)
+% plot(out.td, out.D, 'lineWidth', 2);
+% xlabel("Tempo (s)")
+% ylabel("Duty Cycle (%)")

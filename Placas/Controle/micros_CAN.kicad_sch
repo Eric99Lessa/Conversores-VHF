@@ -2399,7 +2399,7 @@
 				)
 			)
 		)
-		(property "Value" "TJA1050"
+		(property "Value" "Módulo TJA1050"
 			(at 172.085 120.65 0)
 			(effects
 				(font

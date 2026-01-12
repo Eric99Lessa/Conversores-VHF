@@ -4358,7 +4358,7 @@
 				(justify left top)
 			)
 		)
-		(property "R_in" "180"
+		(property "R_in" "178"
 			(at 73.66 63.5 0)
 			(effects
 				(font
@@ -4488,7 +4488,7 @@
 				(justify left top)
 			)
 		)
-		(property "R_in" "180"
+		(property "R_in" "178"
 			(at 73.66 93.98 0)
 			(effects
 				(font
@@ -4627,7 +4627,7 @@
 				(hide yes)
 			)
 		)
-		(property "R_1" "39k"
+		(property "R_1" "12k"
 			(at 73.66 30.48 0)
 			(effects
 				(font
@@ -4636,7 +4636,7 @@
 				(hide yes)
 			)
 		)
-		(property "R_2" "11k"
+		(property "R_2" "3k3"
 			(at 73.66 30.48 0)
 			(effects
 				(font
