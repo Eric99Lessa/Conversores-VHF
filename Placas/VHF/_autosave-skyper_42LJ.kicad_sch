@@ -1,0 +1,63 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "ce798100-bdee-43a7-b53f-2b546bde7889")
+	(paper "A4")
+	(lib_symbols)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 118.11 106.68 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0c0e5136-a000-4463-8e08-4021d29c7e09")
+	)
+	(hierarchical_label "TOP SIGNAL"
+		(shape output)
+		(at 125.73 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "19040360-5985-4bd0-a7fc-23a3e232afb0")
+	)
+	(hierarchical_label "BOT SIGNAL"
+		(shape output)
+		(at 125.73 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "99c87c38-f0ea-42e3-a758-e798a689e324")
+	)
+	(hierarchical_label "+15V"
+		(shape input)
+		(at 118.11 73.66 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c9f9f734-1a27-4bb9-a8a7-44766ad8475a")
+	)
+	(hierarchical_label "ERROR"
+		(shape output)
+		(at 125.73 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d2535452-5548-4bbb-bb13-f197dbf0ad78")
+	)
+)

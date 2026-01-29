@@ -1532,7 +1532,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0909e858-98c1-425d-b1d6-06fa508b5426")
-		(property "Reference" "#PWR15"
+		(property "Reference" "#PWR18"
 			(at 191.77 91.44 0)
 			(effects
 				(font
@@ -1582,7 +1582,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR15")
+					(reference "#PWR18")
 					(unit 1)
 				)
 			)
@@ -1664,7 +1664,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "11c7755b-e947-4df3-972e-e31e1786633b")
-		(property "Reference" "#PWR8"
+		(property "Reference" "#PWR11"
 			(at 88.9 62.23 0)
 			(effects
 				(font
@@ -1715,7 +1715,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR8")
+					(reference "#PWR11")
 					(unit 1)
 				)
 			)
@@ -1823,7 +1823,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2644e373-d5a6-408c-b930-bf738ff89399")
-		(property "Reference" "#PWR7"
+		(property "Reference" "#PWR10"
 			(at 87.63 26.67 0)
 			(effects
 				(font
@@ -1874,7 +1874,7 @@
 		(instances
 			(project ""
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR7")
+					(reference "#PWR10")
 					(unit 1)
 				)
 			)
@@ -1962,7 +1962,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4320dca4-268e-496a-ac23-9d507026a401")
-		(property "Reference" "#PWR1"
+		(property "Reference" "#PWR4"
 			(at 30.48 39.37 0)
 			(effects
 				(font
@@ -2012,7 +2012,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR1")
+					(reference "#PWR4")
 					(unit 1)
 				)
 			)
@@ -2028,7 +2028,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4585bec0-bee4-4b4f-926b-edc96518f8fe")
-		(property "Reference" "#PWR4"
+		(property "Reference" "#PWR7"
 			(at 43.18 39.37 0)
 			(effects
 				(font
@@ -2078,7 +2078,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR4")
+					(reference "#PWR7")
 					(unit 1)
 				)
 			)
@@ -2174,7 +2174,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4bc105b0-deef-4457-844d-e8662c3ff1e8")
-		(property "Reference" "#PWR13"
+		(property "Reference" "#PWR16"
 			(at 135.89 121.92 0)
 			(effects
 				(font
@@ -2224,7 +2224,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR13")
+					(reference "#PWR16")
 					(unit 1)
 				)
 			)
@@ -2240,7 +2240,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5cbec73f-a48c-4775-9c93-11ced08baf4a")
-		(property "Reference" "#PWR5"
+		(property "Reference" "#PWR8"
 			(at 49.53 73.66 0)
 			(effects
 				(font
@@ -2291,7 +2291,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR5")
+					(reference "#PWR8")
 					(unit 1)
 				)
 			)
@@ -2307,7 +2307,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "608ef3d6-2640-4b5b-9115-789aeecacca7")
-		(property "Reference" "#PWR11"
+		(property "Reference" "#PWR14"
 			(at 135.89 66.04 0)
 			(effects
 				(font
@@ -2357,7 +2357,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR11")
+					(reference "#PWR14")
 					(unit 1)
 				)
 			)
@@ -2448,7 +2448,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d5fa08d-011b-4d82-b466-e354a5152a2a")
-		(property "Reference" "#PWR6"
+		(property "Reference" "#PWR9"
 			(at 43.18 129.54 0)
 			(effects
 				(font
@@ -2498,7 +2498,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR6")
+					(reference "#PWR9")
 					(unit 1)
 				)
 			)
@@ -2580,7 +2580,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9716817d-3b85-4916-9729-3e25dfd650d6")
-		(property "Reference" "#PWR10"
+		(property "Reference" "#PWR13"
 			(at 88.9 116.84 0)
 			(effects
 				(font
@@ -2631,7 +2631,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR10")
+					(reference "#PWR13")
 					(unit 1)
 				)
 			)
@@ -2653,7 +2653,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a442e59f-b83d-4561-bc40-3511d7d5b579")
-		(property "Reference" "#PWR2"
+		(property "Reference" "#PWR5"
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -2704,7 +2704,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR2")
+					(reference "#PWR5")
 					(unit 1)
 				)
 			)
@@ -2795,7 +2795,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b4624435-60c1-4cbd-b50e-17b8bf55f1c7")
-		(property "Reference" "#PWR14"
+		(property "Reference" "#PWR17"
 			(at 137.16 29.21 0)
 			(effects
 				(font
@@ -2845,7 +2845,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR14")
+					(reference "#PWR17")
 					(unit 1)
 				)
 			)
@@ -2935,7 +2935,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c200d663-43d8-4388-aa59-374e3c496b8b")
-		(property "Reference" "#PWR9"
+		(property "Reference" "#PWR12"
 			(at 88.9 82.55 0)
 			(effects
 				(font
@@ -2986,7 +2986,7 @@
 		(instances
 			(project "board"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR9")
+					(reference "#PWR12")
 					(unit 1)
 				)
 			)
@@ -3008,7 +3008,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d1827968-b187-482d-bb63-bce66aa10e62")
-		(property "Reference" "#PWR12"
+		(property "Reference" "#PWR15"
 			(at 135.89 88.9 0)
 			(effects
 				(font
@@ -3058,7 +3058,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR12")
+					(reference "#PWR15")
 					(unit 1)
 				)
 			)
@@ -3220,7 +3220,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f4e64a0f-3988-4e08-9a6c-8e2c87a683d1")
-		(property "Reference" "#PWR3"
+		(property "Reference" "#PWR6"
 			(at 30.48 129.54 0)
 			(effects
 				(font
@@ -3270,7 +3270,7 @@
 		(instances
 			(project "Controle"
 				(path "/01568b53-f202-4f02-9c1a-9c10c7610b4b/82d14b7f-e7c0-46b8-aff5-dc2713e8f15c"
-					(reference "#PWR3")
+					(reference "#PWR6")
 					(unit 1)
 				)
 			)

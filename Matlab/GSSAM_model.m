@@ -6,7 +6,7 @@ syms t T D real
 omega0 = 2*pi/T;
 
 n_phases = 3; % Number of phases
-order_approx = 0; % Approximation order
+order_approx = 1; % Approximation order
 n_states_eq = 1 + 2*order_approx; % Number of states per equation
 n_eq = n_phases + 1; % 1 equation for capacitor and 1 for each inductor
 

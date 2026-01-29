@@ -161,6 +161,8 @@ Jc = Kj*J;
 Rc = Kr*R;
 Jd = simplify(J + Jc); assumeAlso(Kj > 0);
 Rd = simplify(R + Rc); assumeAlso(Kr > 0);
+Jd = Kj*J; assumeAlso(Kj > 1);
+Rd = Kr*R; assumeAlso(Kr > 1);
 
 % Nota: jac_H pode ser escrito como diag([L c])*X, diag([L C]) = D_lc
 
@@ -207,13 +209,12 @@ syms Vout real
 syms IL [1 n_phases] real
 d_sol = subs(d_sol, Xn, [IL Vout]');
 [d_num, d_den] = numden(d_sol);
+% Note d_den is equal for all 3 phases
 
 d_num = simplify(collect(d_num, [C^2 L^2]));
 
 matlabFunction(d_num, 'File', 'function_d_num');
-matlabFunction(d_den, 'File', 'function_d_den');
-% matlabFunction(Kr_sol, 'File', 'function_Kr');
-% matlabFunction(Kj_sol, 'File', 'function_Kj');
+matlabFunction(d_den(1), 'File', 'function_d_den');
 
 %% Plota raizes reais em função do ganho Kr
 
@@ -230,44 +231,188 @@ for i = 1:n_eq
 end
 
 real_roots = simplify(roots(isreal_eig));
-conjugate_roots = simplify(roots(~isreal_eig));
+conj_roots = simplify(roots(~isreal_eig));
 
-Kj_range = linspace(0, 3, 100);
-Kr_range = linspace(0, 20, 100);
-params.L = 80e-3;
-params.C = 12000e-3;
-params.R_ind = 1e-3;
+%%
+real_roots_K = simplify(subs(real_roots, [L C R_ind], [80e-3 12*1e3*1e-6 1e-0]));
+conj_roots_K = simplify(subs(conj_roots, [L C R_ind], [80e-3 12*1e3*1e-6 1e-0]));
 
-real_roots_Kr = subs(real_roots, L, 80e-3);
-real_roots_Kr = subs(real_roots_Kr, R_ind, 1e-1);
-real_roots_vec = double(subs(real_roots_Kr, Kr, Kr_range));
+n_Kj = 10; n_Kr = 500;
+Kj_range = linspace(1, 1.5, n_Kj);
+Kr_range = linspace(1, 15, n_Kr);
 
-figure(1)
-title("Lugar das Raízes reais")
-scatter3(real(real_roots_vec), imag(real_roots_vec), Kr_range);
-axis equal
-grid on
-xlabel("Re")
-ylabel("Im")
-view(2)
-% plot_root_locus_2gains_from_roots(roots, Kj_range, Kr_range, params)
+real_roots_val = complex(zeros(length(real_roots_K), n_Kr, n_Kj));
+conj_roots_val = complex(zeros(length(conj_roots_K), n_Kr, n_Kj));
 
-% Separa numerador e denominador da expressão, pegando somente a parte
-% dentro da raiz quadrada
-[num, den] = numden((conjugate_roots(1) - conjugate_roots(2))/2);
+for iter_Kr = 1:n_Kr
+    for iter_Kj = 1:n_Kj
+        real_roots_val(:, iter_Kr, iter_Kj) = double(subs(real_roots_K, ...
+            [Kr Kj], [Kr_range(iter_Kr) Kj_range(iter_Kj)]));
 
-% Eleva ao quadrado para sumir com a raiz e acha o valor de Kj para que a
-% expressão dentro da raiz seja nula - Amortecimento crítico
-% Nota que Kj depende de Kr, dessa maneira só precisamos definir 1 dos
-% ganhos
-[Kj_sol, params, conds] = solve(num^2 == 0, Kj, 'ReturnConditions', true);
+        conj_roots_val(:, iter_Kr, iter_Kj) = double(subs(conj_roots_K, ...
+            [Kr Kj], [Kr_range(iter_Kr) Kj_range(iter_Kj)]));
+    end
+end
+
+% ======================================================================
+% Plot in complex plane with clickable points showing Kr and Kj
+% ======================================================================
+figure; ax = axes; hold(ax, 'on'); grid(ax, 'on');
+xlabel(ax, 'Real'); ylabel(ax, 'Imag'); title(ax, 'Root-locus-like plot (Kr,Kj grid)');
+
+% We will store Kr/Kj in UserData for each plotted object so datatips can show it.
+
+% ---- Plot trajectories for real roots ----
+h = gobjects(0);
+for r = 1:size(real_roots_val, 1)
+    Z = squeeze(real_roots_val(r, :, :));   % size: n_Kr x n_Kj
+
+    % Lines for varying Kr at fixed Kj (looks like locus families)
+    for j = 1:n_Kj
+        zline = Z(:, j);
+        hh = plot(ax, real(zline), imag(zline), 'b-', 'LineWidth', 1.0, ...
+            'PickableParts','all', 'HitTest','on');
+
+        hh.UserData.type   = 'real';
+        hh.UserData.rootNo = r;
+        hh.UserData.mode   = 'Kr_sweep';
+        hh.UserData.Kr     = Kr_range(:);
+        hh.UserData.Kj     = Kj_range(j) * ones(n_Kr,1);
+
+        h(end+1) = hh; %#ok<SAGROW>
+    end
+
+    % Optional: also plot varying Kj at fixed Kr (uncomment if you want mesh-like locus)
+    % for i = 1:n_Kr
+    %     zline = Z(i, :).';
+    %     hh = plot(ax, real(zline), imag(zline), 'b:', 'LineWidth', 0.75, ...
+    %         'PickableParts','all', 'HitTest','on');
+    %     hh.UserData.type   = 'real';
+    %     hh.UserData.rootNo = r;
+    %     hh.UserData.mode   = 'Kj_sweep';
+    %     hh.UserData.Kr     = Kr_range(i) * ones(n_Kj,1);
+    %     hh.UserData.Kj     = Kj_range(:);
+    %     h(end+1) = hh;
+    % end
+end
+
+% ---- Plot trajectories for complex-conjugate roots ----
+for r = 1:size(conj_roots_val, 1)
+    Z = squeeze(conj_roots_val(r, :, :));   % n_Kr x n_Kj
+
+    for j = 1:n_Kj
+        zline = Z(:, j);
+        hh = plot(ax, real(zline), imag(zline), 'r-', 'LineWidth', 1.0, ...
+            'PickableParts','all', 'HitTest','on');
+
+        hh.UserData.type   = 'complex';
+        hh.UserData.rootNo = r;
+        hh.UserData.mode   = 'Kr_sweep';
+        hh.UserData.Kr     = Kr_range(:);
+        hh.UserData.Kj     = Kj_range(j) * ones(n_Kr,1);
+
+        h(end+1) = hh; %#ok<SAGROW>
+    end
+end
+
+axis(ax, 'equal'); % often nicer for complex plane
+
+% Enable data cursor + custom callback
+dcm = datacursormode(gcf);
+set(dcm, 'Enable', 'on', 'UpdateFcn', @localDatatip);
+
+syms tau real
+assumeAlso(tau > 0);
+
+[Kr_sol, params, conds] = solve(tau == -1/real_roots(1), Kr, 'ReturnConditions', true);
+conj_roots = simplify(subs(conj_roots, Kr, Kr_sol), 1000);
+
+Kj_sol = solve(conj_roots(1) == sum(conj_roots)/2, Kj);
 Kj_sol = simplify(Kj_sol);
 
-% Assumindo a condição de amortecimento crítico obtida as raízes viram:
+matlabFunction(Kr_sol, 'File', 'function_Kr');
+matlabFunction(Kj_sol, 'File', 'function_Kj');
 
-conj_roots_d = subs(conjugate_roots, Kj, Kj_sol);
+%%
 
-roots_d = [real_roots; conj_roots_d];
-syms tau real
 
-[Kr_sol, params, conds] = solve(-tau == real_roots(1), Kr, 'ReturnConditions', true);
+% ----------------------------------------------------------------------
+% Datatip callback (shows Kr/Kj at nearest vertex of the clicked line)
+% ----------------------------------------------------------------------
+function txt = localDatatip(~, event_obj)
+    target = event_obj.Target;
+    pos    = event_obj.Position;  % [x y z] typically (z unused)
+
+    txt = {sprintf('Re: %.6g', pos(1)), sprintf('Im: %.6g', pos(2))};
+
+    if isprop(target, 'UserData') && isstruct(target.UserData) ...
+            && isfield(target.UserData, 'Kr') && isfield(target.UserData, 'Kj')
+
+        % Find nearest vertex on the clicked line to map to Kr/Kj
+        xd = target.XData(:);
+        yd = target.YData(:);
+        [~, idx] = min((xd - pos(1)).^2 + (yd - pos(2)).^2);
+
+        Kr = target.UserData.Kr(idx);
+        Kj = target.UserData.Kj(idx);
+
+        txt{end+1} = sprintf('Kr: %.6g', Kr);
+        txt{end+1} = sprintf('Kj: %.6g', Kj);
+
+        if isfield(target.UserData, 'type')
+            txt{end+1} = sprintf('Type: %s', target.UserData.type);
+        end
+        if isfield(target.UserData, 'rootNo')
+            txt{end+1} = sprintf('Root #: %d', target.UserData.rootNo);
+        end
+        if isfield(target.UserData, 'mode')
+            txt{end+1} = sprintf('Sweep: %s', target.UserData.mode);
+        end
+    end
+end
+
+% ======================================================================
+% Constant damping ratio lines (zeta lines): add to the same axes "ax"
+% ======================================================================
+
+% Choose which zeta values you want
+zeta_list = [0.1 0.2 0.3 0.4 0.5 0.7 0.9];   % edit as desired
+
+% Decide how far to draw them based on current/expected plot extent.
+% If you call this AFTER plotting roots, it will auto-scale nicely.
+xl = xlim(ax); yl = ylim(ax);
+
+% Ensure we include some left-half plane span even if current xlim isn't set yet
+x_left = min([xl(1), -1]);     % leftmost x to draw to
+x0     = 0;                    % start at origin
+
+xline = linspace(x0, x_left, 300);  % goes from 0 to negative values
+
+for zeta = zeta_list
+    if zeta <= 0 || zeta >= 1
+        continue; % zeta lines are typically 0<zeta<1
+    end
+
+    m = sqrt(1 - zeta^2) / zeta;  % slope factor: |w| = m * (-sigma)
+
+    yline =  m * (-xline);        % upper line
+    yline2 = -m * (-xline);       % lower line
+
+    % Plot lines
+    plot(ax, xline, yline,  'k--', 'LineWidth', 0.8, 'HandleVisibility','off');
+    plot(ax, xline, yline2, 'k--', 'LineWidth', 0.8, 'HandleVisibility','off');
+
+    % Label near the upper branch (pick a point not too close to origin)
+    label_x = x_left * 0.7;               % negative
+    label_y = m * (-label_x);             % positive
+    text(ax, label_x, label_y, sprintf('\\zeta=%.1f', zeta), ...
+        'Color','k', 'FontSize', 9, 'HorizontalAlignment','left', ...
+        'VerticalAlignment','bottom', 'Clipping','on');
+end
+
+% Optional: also draw the imaginary axis and real axis lightly
+plot(ax, [0 0], ylim(ax), 'k:', 'HandleVisibility','off');
+plot(ax, xlim(ax), [0 0], 'k:', 'HandleVisibility','off');
+
+% Restore limits (plot/text can sometimes expand limits depending on settings)
+xlim(ax, xl); ylim(ax, yl);

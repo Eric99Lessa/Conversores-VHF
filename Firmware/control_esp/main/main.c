@@ -12,6 +12,7 @@
 #include "esp_crc.h"
 #include "driver/spi_slave.h"
 #include "esp_heap_caps.h"
+#include "driver/uart.h"
 
 static const char *TAG_PWM = "MCPWM";
 static const char *TAG_ADC = "ADC";
@@ -19,13 +20,14 @@ static const char *TAG_SPI = "CTRL_SPI_SLAVE";
 
 // MCPWM frequency and GPIO mapping
 #define PWM_FREQUENCY_HZ 20000
+#define PWM_INIT_DUTY_PC 0.0f
 #define U_L_GPIO (22)
 #define V_L_GPIO (21)
 #define W_L_GPIO (5)
 #define U_U_GPIO (23)
 #define V_U_GPIO (3)
 #define W_U_GPIO (18)
-#define U_ERR_GPIO (25)
+#define U_ERR_GPIO (1)
 #define V_ERR_GPIO (19)
 #define W_ERR_GPIO (17)
 
@@ -36,10 +38,19 @@ static const char *TAG_SPI = "CTRL_SPI_SLAVE";
 // ADC
 #define ADC_TASK_RATE_HZ 1000
 #define ADC_PERIOD_TICKS pdMS_TO_TICKS(1000 / ADC_TASK_RATE_HZ)
-#define ADC_SAMPLES_PER_CH 2
+#define ADC_SAMPLES_PER_CH 4
 #define ADC_WIDTH_CFG ADC_WIDTH_BIT_12
 #define ADC_ATTEN_CFG ADC_ATTEN_DB_11
-
+#define Vin_Gain 0.976087587027069f
+#define Vout_Gain 0.890099355577886f
+#define R1_In 9400.0f
+#define R1_Out 14100.0f
+#define Rm_In 100.0f
+#define Rm_Out 100.0f
+#define LF210_Gain 2000.0f // input/output
+#define LV20P_Gain 0.4f    // input/output
+#define R_IL 100.0f
+#define R_Iout 100.0f
 // SPI pins/host
 #define PIN_MISO 12
 #define PIN_MOSI 13
@@ -85,10 +96,10 @@ typedef enum
 static const adc1_channel_t s_adc1_sig_channel[ADC_SIG_COUNT] = {
     [ADC_SIG_V_IN] = ADC1_CHANNEL_0,
     [ADC_SIG_V_OUT] = ADC1_CHANNEL_3,
-    [ADC_SIG_IL1] = ADC1_CHANNEL_6,
-    [ADC_SIG_IL2] = ADC1_CHANNEL_7,
-    [ADC_SIG_IL3] = ADC1_CHANNEL_4,
-    [ADC_SIG_IL_OUT] = ADC1_CHANNEL_5,
+    [ADC_SIG_IL1] = ADC1_CHANNEL_7,
+    [ADC_SIG_IL2] = ADC1_CHANNEL_4,
+    [ADC_SIG_IL3] = ADC1_CHANNEL_5,
+    [ADC_SIG_IL_OUT] = ADC1_CHANNEL_6,
 };
 
 typedef struct
@@ -198,8 +209,12 @@ static inline int adc1_read_avg(adc1_channel_t ch, int samples)
     return adc_reading;
 }
 
-float convertToVoltage(float adc_value)
+float digitalToAnalog(float adc_value)
 {
+    if (adc_value == 0)
+    {
+        return 0.0f;
+    }
     if (adc_value > 2890)
     {
         return 0.0014f * adc_value - 0.4103f;
@@ -219,18 +234,26 @@ static void adc_sample_task(void *arg)
 
     while (1)
     {
-        for (int i = 0; i < ADC_SIG_COUNT; i++)
+        for (int i = 0; i < ADC_SIG_COUNT - 1; i++)
         {
             s_adc_res.avg_raw[i] = adc1_read_avg(s_adc1_sig_channel[i], ADC_SAMPLES_PER_CH);
         }
 
         taskENTER_CRITICAL(&telem_mux);
-        g_telem_state.x[0] = convertToVoltage((float)s_adc_res.avg_raw[ADC_SIG_V_IN]);
-        g_telem_state.x[1] = convertToVoltage((float)s_adc_res.avg_raw[ADC_SIG_V_OUT]);
-        g_telem_state.x[2] = (float)s_adc_res.avg_raw[ADC_SIG_IL1];
-        g_telem_state.x[3] = (float)s_adc_res.avg_raw[ADC_SIG_IL2];
-        g_telem_state.x[4] = (float)s_adc_res.avg_raw[ADC_SIG_IL3];
-        g_telem_state.x[5] = (float)s_adc_res.avg_raw[ADC_SIG_IL_OUT];
+        // g_telem_state.x[0] = Vin_Gain * R1_In * LV20P_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_V_IN]) / Rm_In;
+        // g_telem_state.x[1] = Vout_Gain * R1_Out * LV20P_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_V_OUT]) / Rm_Out;
+        g_telem_state.x[2] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL1]) / R_IL;
+        g_telem_state.x[3] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL2]) / R_IL;
+        g_telem_state.x[4] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL3]) / R_IL;
+        // g_telem_state.x[5] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL_OUT]) / R_Iout;
+        // g_telem_state.x[0] = (float)s_adc_res.avg_raw[ADC_SIG_V_IN];
+        // g_telem_state.x[1] = (float)s_adc_res.avg_raw[ADC_SIG_V_OUT];
+        // g_telem_state.x[2] = (float)s_adc_res.avg_raw[ADC_SIG_IL1];
+        // g_telem_state.x[3] = (float)s_adc_res.avg_raw[ADC_SIG_IL2];
+        // g_telem_state.x[4] = (float)s_adc_res.avg_raw[ADC_SIG_IL3];
+        g_telem_state.x[0] = (float)s_adc_res.avg_raw[ADC_SIG_V_IN] * 0.029724924303682 + 3.361912841627126;
+        g_telem_state.x[1] = (float)s_adc_res.avg_raw[ADC_SIG_V_OUT] * 0.047925930496814 - 0.566484076397789;
+        g_telem_state.x[5] = 0.0f;
         taskEXIT_CRITICAL(&telem_mux);
 
         vTaskDelayUntil(&last, ADC_PERIOD_TICKS);
@@ -255,6 +278,7 @@ static inline uint16_t clamp_u16(int v, int lo, int hi)
 
 static esp_err_t mcpwm_setup(mcpwm_unit_t unit)
 {
+    // GPIO INIT PWM
     ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM0A, U_L_GPIO));
     ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM0B, U_U_GPIO));
     ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM1A, V_L_GPIO));
@@ -262,16 +286,56 @@ static esp_err_t mcpwm_setup(mcpwm_unit_t unit)
     ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM2A, W_L_GPIO));
     ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM2B, W_U_GPIO));
 
+    // GPIO INIT FAULT
+    gpio_config_t fault_gpio_conf = {
+        .pin_bit_mask = (1ULL << U_ERR_GPIO) | (1ULL << V_ERR_GPIO) | (1ULL << W_ERR_GPIO),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_ENABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+    ESP_ERROR_CHECK(gpio_config(&fault_gpio_conf));
+
+    ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM_FAULT_0, U_ERR_GPIO));
+    ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM_FAULT_1, V_ERR_GPIO));
+    ESP_ERROR_CHECK(mcpwm_gpio_init(unit, MCPWM_FAULT_2, W_ERR_GPIO));
+
+    // Frequency and initial value
     mcpwm_config_t pwm_cfg = {
         .frequency = PWM_FREQUENCY_HZ,
-        .cmpr_a = 0.0f,
-        .cmpr_b = 0.0f,
+        .cmpr_a = PWM_INIT_DUTY_PC,
+        .cmpr_b = PWM_INIT_DUTY_PC,
         .duty_mode = MCPWM_DUTY_MODE_0,
         .counter_mode = MCPWM_UP_COUNTER,
     };
     ESP_ERROR_CHECK(mcpwm_init(unit, MCPWM_TIMER_0, &pwm_cfg));
     ESP_ERROR_CHECK(mcpwm_init(unit, MCPWM_TIMER_1, &pwm_cfg));
     ESP_ERROR_CHECK(mcpwm_init(unit, MCPWM_TIMER_2, &pwm_cfg));
+
+    mcpwm_set_timer_sync_output(unit, MCPWM_TIMER_0, MCPWM_SWSYNC_SOURCE_TEZ);
+
+    mcpwm_sync_config_t sync_cfg = {
+        .sync_sig = MCPWM_SELECT_TIMER0_SYNC,
+        .timer_val = 0,
+        .count_direction = MCPWM_TIMER_COUNT_MODE_UP,
+    };
+
+    ESP_ERROR_CHECK(mcpwm_sync_configure(unit, MCPWM_TIMER_0, &sync_cfg));
+    sync_cfg.timer_val = 333;
+    ESP_ERROR_CHECK(mcpwm_sync_configure(unit, MCPWM_TIMER_1, &sync_cfg));
+    sync_cfg.timer_val = 667;
+    ESP_ERROR_CHECK(mcpwm_sync_configure(unit, MCPWM_TIMER_2, &sync_cfg));
+
+    ESP_ERROR_CHECK(mcpwm_fault_init(unit, MCPWM_LOW_LEVEL_TGR, MCPWM_SELECT_F0));
+    ESP_ERROR_CHECK(mcpwm_fault_init(unit, MCPWM_LOW_LEVEL_TGR, MCPWM_SELECT_F1));
+    ESP_ERROR_CHECK(mcpwm_fault_init(unit, MCPWM_LOW_LEVEL_TGR, MCPWM_SELECT_F2));
+
+    mcpwm_output_action_t action_a = MCPWM_ACTION_FORCE_LOW;
+    mcpwm_output_action_t action_b = MCPWM_ACTION_FORCE_LOW;
+
+    ESP_ERROR_CHECK(mcpwm_fault_set_cyc_mode(unit, MCPWM_TIMER_0, MCPWM_SELECT_F0, action_a, action_b));
+    ESP_ERROR_CHECK(mcpwm_fault_set_cyc_mode(unit, MCPWM_TIMER_1, MCPWM_SELECT_F1, action_a, action_b));
+    ESP_ERROR_CHECK(mcpwm_fault_set_cyc_mode(unit, MCPWM_TIMER_2, MCPWM_SELECT_F2, action_a, action_b));
 
     return ESP_OK;
 }
@@ -513,6 +577,13 @@ static void spi_telemetry_task(void *arg)
 // ===== APP MAIN =====
 void app_main(void)
 {
+    // 1. Disable UART0 if driver was installed
+    uart_driver_delete(UART_NUM_0);
+
+    // 2. Reset pins to GPIO function
+    gpio_reset_pin(GPIO_NUM_1); // U0TXD
+    gpio_reset_pin(GPIO_NUM_3); // U0RXD
+
     mcpwm_unit_t unit = MCPWM_UNIT_0;
     ESP_ERROR_CHECK(mcpwm_setup(unit));
     ESP_LOGI(TAG_PWM, "MCPWM setup complete");
