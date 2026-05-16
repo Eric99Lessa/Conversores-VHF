@@ -1,0 +1,212 @@
+function [d_num, d_den, jac_d, jac_mf, res_mf, eig_values] = controlLawExpr(X_dot, mode_solv)
+    arguments
+        X_dot,
+        mode_solv = 0,
+    end
+
+    %%
+    [J, R, jac_X, g_x, xi] = DE2pH(X_dot);
+
+    %%
+    vars = symvar(X_dot);
+
+    % Create them as individual symbols first
+    syms(vars(:));
+    assume(vars(:), 'real');
+
+    % Group variables by base name and reconstruct arrays
+    var_names = arrayfun(@char, vars, 'UniformOutput', false);
+    
+    pattern = '.*\d$';
+    mask = regexp(var_names, pattern, 'once');
+    vars_ending_with_number_names = var_names(~cellfun('isempty', mask));
+
+    % Find variables with numeric suffixes (e.g., Xn1, Xn2, ...)
+    [base_names, ~, idx_b] = unique(regexprep(vars_ending_with_number_names, '\d+$', ''));
+    len_symbols = histcounts(idx_b);
+
+    for i = 1:length(base_names)
+        base = base_names{i};
+        if base == 'X'
+            eval([base ' = sym(''' base ''', [' num2str(length(X_dot)) ' 1], "real");']);
+        else
+            eval([base ' = sym(''' base ''', [' num2str(len_symbols(i)) ' 1], "real");']);
+        end
+    end
+
+    %% 
+    n_phases = length(X) - 1;
+
+    %%
+    syms e_Vout IL_ref_dot Kr Kj Ki lambda real
+    syms e_IL [n_phases 1] real
+    assumeAlso(Kr > 0);
+    assumeAlso(Kj > 0);
+
+    X_ref_dot = [IL_ref_dot*ones(n_phases, 1); 0; 0];
+    err = [e_IL; e_Vout; lambda];
+
+    %%
+    J_aux = J;
+    R_aux = R;
+    J_aux(end+1, end+1) = 0;
+    R_aux(end+1, end+1) = 0;
+    
+    Jc = Kj*J_aux;
+    Rc = Kr*R_aux;
+    Jc(end, n_phases+1) = Ki/C;
+    Jc(n_phases+1, end) = -Ki/C;
+    Jc(1:n_phases, end) = -Ki/L;
+
+    %% 
+    
+    % Define closed-loop Hamiltonian
+    w = sqrt([diag(jac_X); 1]);
+    Hd = 0.5*(w.*err).'*(w.*err);
+    jac_Hd = jacobian(Hd, err)';
+    jac_Xd = jacobian(jac_Hd, err);
+    
+    Jd = simplify(J_aux + Jc);
+    Jd = subs(Jd, Kj + 1, Kj); assume(Kj > 1);
+    Rd = simplify(R_aux + Rc);
+    Rd = subs(Rd, Kr + 1, Kr); assume(Kr > 1);
+
+    if nargout > 2
+        jac_d = (Jd - Rd)*jac_Xd;
+    end
+
+    %% Lei de Controle
+    
+    % Agora precisamos achar a equação de D que garante as raízes nos lugares
+    % desejados
+    
+    % Igualando as derivadas em malha aberta e fechada, isolando o duty cycle:
+    % g_x*U = (Jd - Rd)*jac_Hd + X_ref_dot - (J - R)*jac_H-xi
+    % (J - R)*(jac_Hd - jac_H) + (Jc - Rc)*jac_Hd + X_ref_dot - xi
+    
+    % g_x*U = (J - R)*D_lc*X_ref + (Jc - Rc)*D_lc*(X - X_ref) + X_ref_dot - xi
+    
+    % como g(x) não é quadrada, precisamos usar a pseudo inversa, que é:
+    % inv(g_x'*g_x)*g_x' e pode ser obtida pela função pinv
+    
+    % Jd = subs(Jd, Kj, Kj_sol);
+    % Rd = Kr*R;
+    
+    expr_ma = (J - R)*jac_X*X + g_x*d + xi; % X_dot malha aberta
+    expr_mf_d = (Jd - Rd)*jac_Xd*err + X_ref_dot; % X_dot malha fechada
+    
+    %%
+    % g_perp = null(g_x.')';
+    % verif_g_perp = g_perp*g_x;
+    
+    % res = g_perp*(expr_ma - expr_mf_d(1:end-1));
+    % res = simplify(res, 1000);
+    % [num_res, den_res] = numden(res);
+    
+    % Isolando g_x*d
+    LHS = g_x*d;
+    RHS = simplify(expr_mf_d(1:end-1) - expr_ma + LHS);
+
+    if exist("R_C", 'var')
+        RHS = simplify(subs(expand(RHS), R_C, inf));
+    end
+
+    %% Acha o duty cycle de acordo com o modo escolhido   
+    syms Vout int_eVout real
+    syms IL [n_phases 1] real
+    syms Vc_ref IL_ref R_load real
+
+    null_g_x = null(g_x')';
+    P_balanc = simplify(null_g_x*X_dot);
+    P_balanc = subs(P_balanc, X, [IL_ref*ones(n_phases, 1); Vc_ref]);
+    P_balanc = subs(P_balanc, [R_L , 0);
+    
+    IL_ref_sol = solve(P_balanc == 0, IL_ref);
+
+    if mode_solv <= 1
+        if mode_solv == 0 % current equations IDA-PBC
+            idx_eq = 1:n_phases;
+        elseif mode_solv == 1 % n-1 current eqs 1 voltage eq IDA-PBC
+            idx_eq = [1:n_phases-1 n_phases + 1];
+        end
+        d_sol = solve(LHS(idx_eq) == RHS(idx_eq), d);
+
+        if isstruct(d_sol)
+            d_sol = simplify(struct2array(d_sol)');
+        end
+    elseif mode_solv == 2 % PINV solution IDA-PBC
+        pinv_g_x = simplify(collect(pinv(g_x)));
+        d_sol = pinv_g_x*RHS;  
+    elseif mode_solv == 3 % Krasovsky stability
+        syms Vc(t) Vc_dot(t)
+        
+        syms IL(t) IL_dot(t) U(t) U_dot [n_phases 1]
+
+        S1 = 0.5*L*sum(IL_dot.^2) + 0.5*C*Vc_dot^2;
+        S1_dot = diff(S1);
+
+        X_dot_aux = subs(X_dot, [X; d], [IL; Vc; U]);
+
+        S1_dot = subs(S1_dot, [diff(IL_dot); diff(Vc_dot)], diff(X_dot_aux));
+        S1_dot = subs(S1_dot, diff(IL_), IL_dot);
+        S1_dot = subs(S1_dot, diff(Vc), Vc_dot);
+        S1_dot = subs(S1_dot, diff(U), U_dot);
+        S1_dot = subs(S1_dot, VD, 0);
+        S1_dot = simplify(S1_dot);
+        S1_dot = collect(S1_dot, U_dot);
+
+        syms K1 real
+        U_dot_expr = -K1*jacobian(S1_dot, U_dot);
+
+        % S2 = 0.5*L*sum((IL - IL_ref).^2) + 0.5*C*(Vc - Vc_ref)^2;
+        % S2_dot = diff(S2);
+        % 
+        % S2_dot = subs(S2_dot, [diff(IL); diff(Vc)], X_dot_aux);
+        % S2_dot = simplify(expand(S2_dot));
+        
+        teste = 0;
+    elseif mode_solv == 4 % current equations algebraic estimator
+    elseif mode_solv == 5 % n-1 current eqs 1 voltage eq algebraic estimator
+    elseif mode_solv == 6 % PINV algebraic estimator
+    end
+
+    d_sol = subs(d_sol, [X; lambda], [IL; Vout; int_eVout]);
+    [d_num, d_den] = numden(d_sol);
+
+    d_num = simplify(d_num);
+    d_den = simplify(d_den);
+
+    %%
+    if nargout > 3
+        expr_mf = (J - R)*jac_X*X + g_x*(d_num./d_den) + xi;
+        expr_mf = subs(expr_mf, [X; lambda], [IL; Vout; int_eVout]);
+        expr_mf = simplify(expand(expr_mf), 1000);
+        expr_mf = [expr_mf; Ki*e_Vout];
+    
+        err_expr = [e_IL; e_Vout; int_eVout];
+        jac_mf = jacobian(expr_mf, err_expr);
+        jac_mf = simplify(jac_mf, 1000);
+
+        if nargout > 4
+            res_mf = simplify(expand(expr_mf - X_ref_dot - jac_mf*err_expr), 1000);
+            res_mf = res_mf(res_mf ~= 0);
+            if exist("R_C", 'var')
+                res_mf = simplify(subs(expand(res_mf), R_C, inf));
+            end
+        end
+        if nargout > 5
+            eig_values = eig(jac_mf);
+            if ~isempty(regexp(string(eig_values(1)), 'root', 'once'))
+                str_roots = string(eig_values(1));
+                [~, noMatch] = regexp(str_roots, 'root\(.*?', 'match', 'split');
+                noMatch = noMatch(noMatch ~= "");
+                poly_expr = strsplit(noMatch, ',');
+                poly_expr = poly_expr(1);
+                poly_expr = str2sym(poly_expr);
+                poly_expr = simplify(poly_expr);
+                eig_values = solve(poly_expr);
+            end
+            eig_values = simplify(eig_values, 1000);
+        end
+    end
+end

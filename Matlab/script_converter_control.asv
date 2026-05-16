@@ -1,0 +1,201 @@
+%%
+clear; close all; clc;
+
+addpath(pwd + "/Simulink/");
+% dados_conversor;
+dictionaries;
+
+%% Controle
+fs = 1e3;
+Ts = 1/fs;
+
+N_est_alg_Vin = 50;
+N_est_alg_Vout = 50;
+N_est_alg_IL = 50;
+N_est_alg_ILref = 50;
+N_est_alg_load = 50;
+N_est_alg_U = 50;
+
+settling_time_i = 0.1;
+settling_time_v = 0.3;
+zeta_v = 1/sqrt(2);
+wn_v = 4/(zeta)
+
+%% Simulation - Teste 3 fases
+voltage_source = "DC";
+converter_mode = 0;
+control_str = "CascadeModelFree"; % "IDAPBC" "Krasovskii" "ModelFree" "CascadeModelBased" "CascadeModelFree"
+control_mode = map_control(control_str);
+n_phases = 3;
+f_cutoff = 1000;
+Vref = 24;
+decim = 10;
+Tend = 0.5;
+R_load = [0 1; Tend 1];
+
+%%
+out = sim("boost_control.slx");
+
+%% Calculos auxiliares
+tD  = out.D_bot.Time(:);
+tIL = out.IL.Time(:);
+
+Draw  = squeeze(out.D_bot.Data);
+ILraw = squeeze(out.IL.Data);
+
+if size(Draw,2) == numel(tD)
+    D = Draw.';     % ND x 3
+else
+    D = Draw;
+end
+
+if size(ILraw,2) == numel(tIL)
+    IL = ILraw.';   % NIL x 3
+else
+    IL = ILraw;
+end
+
+D_sync = interp1(tD, D, tIL, 'previous', 'extrap');
+
+Vf = 0.8;   % example diode forward drop
+
+Pd_phase = Vf.*IL.*(1 - D_sync);   % NIL x 3
+Pd = sum(Pd_phase, 2);         % NIL x 1
+
+Pin = out.Vin.Data.*sum(out.IL.Data, 2);
+Pout = out.Vout.Data.*out.I_load.Data;
+Pout_ref = (Vref^2)./out.R_load.Data;
+Pr = R_L*sum(out.IL.Data.^2, 2)*1e-3;
+t_array = out.IL.Time;
+
+%% Plot Tensão
+id_fig = 1;
+figure(id_fig)
+subplot(2, 1, 1)
+plot(out.Vin, 'lineWidth', 2); hold on;
+plot(out.Vout, 'lineWidth', 2); hold on;
+yline(Vref, '--', 'LineWidth', 2);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Tensão (V)', 'FontSize', 14);
+legend('Entrada', 'Saída', 'Referência', 'FontSize', 14, 'Location', 'best');
+title('Tensões de Entrada e Saída', 'FontSize', 18);
+
+subplot(2, 1, 2)
+if converter_mode == 0
+    plot(out.D_bot, 'lineWidth', 2);
+else
+    plot(out.D_top, 'LineWidth', 2);
+end
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Duty Cycle (%)', 'FontSize', 14);
+legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+title('Ciclo de Trabalho', 'FontSize', 18);
+
+%% Plot Corrente
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 1, 1)
+plot(out.IL, 'lineWidth', 2); hold on;
+plot(out.ILref, '--', 'lineWidth', 2); hold on;
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("Corrente (A)");
+legend("IL1", "IL2", "IL3", "Referencia", 'Location','best')
+title('Correntes nos indutores', 'FontSize', 18);
+
+subplot(3, 1, 2)
+plot(out.I_load, 'lineWidth', 2); hold on;
+plot(out.I_load_est, 'lineWidth', 2);
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("Corrente (A)");
+legend("Saída", "Saída estimada", 'Location','best')
+title('Correntes de Saída', 'FontSize', 18);
+
+subplot(3, 1, 3)
+if converter_mode == 0
+    plot(out.D_bot, 'lineWidth', 2);
+else
+    plot(out.D_top, 'LineWidth', 2);
+end
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Duty Cycle (%)', 'FontSize', 14);
+legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+title('Ciclo de Trabalho', 'FontSize', 18);
+
+%% Potência de entrada e saída
+id_fig = id_fig + 1;
+figure(id_fig)
+
+subplot(3, 1, 1)
+plot(t_array, Pin, 'LineWidth', 2.5); hold on;
+plot(t_array, Pout, 'LineWidth', 2.5); hold on;
+% plot(out.R_load.Time, Pout_ref, '--', 'LineWidth', 2.5); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Potência (W)', 'FontSize', 14);
+legend('Entrada', 'Saída', 'FontSize', 14, 'Location', 'best');
+title('Potências na Entrada e Saída', 'FontSize', 18)
+
+subplot(3, 1, 2)
+plot(t_array, 100.*Pout./Pin, 'LineWidth', 2.5);
+legend('Eficiencia', 'Location', 'best');
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Eficiência (%)', 'FontSize', 14);
+title('Eficiência');
+ylim([0 100])
+grid on;
+
+subplot(3, 1, 3)
+if converter_mode == 0
+    plot(out.D_bot, 'lineWidth', 2);
+else
+    plot(out.D_top, 'LineWidth', 2);
+end
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Duty Cycle (%)', 'FontSize', 14);
+legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+title('Duty Cycle (%)', 'FontSize', 18);
+
+%%
+
+% id_fig = id_fig + 1;
+% figure(id_fig)
+% subplot(2, 1, 1)
+% plot(out.R_load, 'lineWidth', 2); hold on;
+% yline(1, '--', 'LineWidth', 2);
+% grid on; grid minor;
+% ax = gca;
+% ax.FontSize = 14;
+% xlabel('Tempo (s)', 'FontSize', 14);
+% ylabel('Resistência (Ohm)', 'FontSize', 14);
+% legend('Estimativa', 'Valor Real', 'FontSize', 14, 'Location', 'best');
+% title('Estimativa da Carga', 'FontSize', 18);
+% 
+% subplot(2, 1, 2)
+% if converter_mode == 0
+%     plot(out.D_bot, 'lineWidth', 2);
+% else
+%     plot(out.D_top, 'LineWidth', 2);
+% end
+% grid on; grid minor;
+% ax = gca;
+% ax.FontSize = 14;
+% xlabel('Tempo (s)', 'FontSize', 14);
+% ylabel('Duty Cycle (%)', 'FontSize', 14);
+% legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+% title('Ciclo de Trabalho', 'FontSize', 18);

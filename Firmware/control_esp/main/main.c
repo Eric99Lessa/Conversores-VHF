@@ -209,6 +209,22 @@ static inline int adc1_read_avg(adc1_channel_t ch, int samples)
     return adc_reading;
 }
 
+float digitalToMeasure(float adc_value, float a_1, float b_1, float a_2, float b_2)
+{
+    if (adc_value == 0)
+    {
+        return 0.0f;
+    }
+    if (adc_value < 2890)
+    {
+        return a_1 * adc_value + b_1;
+    }
+    else
+    {
+        return a_2 * adc_value + b_2;
+    }
+}
+
 float digitalToAnalog(float adc_value)
 {
     if (adc_value == 0)
@@ -242,17 +258,16 @@ static void adc_sample_task(void *arg)
         taskENTER_CRITICAL(&telem_mux);
         // g_telem_state.x[0] = Vin_Gain * R1_In * LV20P_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_V_IN]) / Rm_In;
         // g_telem_state.x[1] = Vout_Gain * R1_Out * LV20P_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_V_OUT]) / Rm_Out;
-        g_telem_state.x[2] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL1]) / R_IL;
-        g_telem_state.x[3] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL2]) / R_IL;
-        g_telem_state.x[4] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL3]) / R_IL;
+        // g_telem_state.x[2] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL1]) / R_IL;
+        // g_telem_state.x[3] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL2]) / R_IL;
+        // g_telem_state.x[4] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL3]) / R_IL;
         // g_telem_state.x[5] = LF210_Gain * digitalToAnalog((float)s_adc_res.avg_raw[ADC_SIG_IL_OUT]) / R_Iout;
-        // g_telem_state.x[0] = (float)s_adc_res.avg_raw[ADC_SIG_V_IN];
-        // g_telem_state.x[1] = (float)s_adc_res.avg_raw[ADC_SIG_V_OUT];
-        // g_telem_state.x[2] = (float)s_adc_res.avg_raw[ADC_SIG_IL1];
-        // g_telem_state.x[3] = (float)s_adc_res.avg_raw[ADC_SIG_IL2];
-        // g_telem_state.x[4] = (float)s_adc_res.avg_raw[ADC_SIG_IL3];
-        g_telem_state.x[0] = (float)s_adc_res.avg_raw[ADC_SIG_V_IN] * 0.029724924303682 + 3.361912841627126;
-        g_telem_state.x[1] = (float)s_adc_res.avg_raw[ADC_SIG_V_OUT] * 0.047925930496814 - 0.566484076397789;
+
+        g_telem_state.x[0] = digitalToMeasure((float)s_adc_res.avg_raw[ADC_SIG_V_IN], 0.031158767346203, 5.047952876931346, 0.020762618848175, 35.092822036233684);
+        g_telem_state.x[1] = digitalToMeasure((float)s_adc_res.avg_raw[ADC_SIG_V_OUT], 0.046537663880674, 6.700344761853321, 0.046537663880674, 6.700344761853321);
+        g_telem_state.x[2] = digitalToMeasure((float)s_adc_res.avg_raw[ADC_SIG_IL1], 0.016355301309278, 3.080442675490790, 0.012291085427038, 14.826026575166821);
+        g_telem_state.x[3] = digitalToMeasure((float)s_adc_res.avg_raw[ADC_SIG_IL2], 0.016355301309278, 3.080442675490790, 0.012291085427038, 14.826026575166821);
+        g_telem_state.x[4] = digitalToMeasure((float)s_adc_res.avg_raw[ADC_SIG_IL3], 0.016355301309278, 3.080442675490790, 0.012291085427038, 14.826026575166821);
         g_telem_state.x[5] = 0.0f;
         taskEXIT_CRITICAL(&telem_mux);
 

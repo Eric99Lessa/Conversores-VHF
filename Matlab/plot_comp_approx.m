@@ -8,9 +8,13 @@ function [] = plot_comp_approx(un, un_approx)
     T_val = 2*pi; % Example period
     
     hold on;
+    vars = symvar(un);
+    vars = vars(~has(vars, T));
+    vars = vars(~has(vars, t));
+    
     for i = 1:N_phases
         % Substitute numerical values
-        ui_plot = subs(un(i), [D, T], [D_val, T_val]);
+        ui_plot = subs(un(i), [vars(i), T], [D_val, T_val]);
         % Plot each PWM signal
         fplot(ui_plot, [0, T_val*(1 + (N_phases - 1)/(3*N_phases))], 'LineWidth', 2); % Plot 2 periods
     end
@@ -27,12 +31,12 @@ function [] = plot_comp_approx(un, un_approx)
     hold on;
     for i = 1:1
         % Substitute numerical values
-        ui_plot = subs(un(i), [D, T], [D_val, T_val]);
+        ui_plot = subs(un(i), [vars(i), T], [D_val, T_val]);
         % Plot each PWM signal
         fplot(ui_plot, [0, T_plot_end], 'LineWidth', 2); % Plot 2 periods
 
         % Plot each PWM signal approximation
-        ui_approx_plot = subs(un_approx(i), [D, T], [D_val, T_val]);
+        ui_approx_plot = subs(un_approx(i), [vars(i), T], [D_val, T_val]);
         fplot(real(ui_approx_plot), [0, T_plot_end], '--', 'LineWidth', 2);
     end
     hold off;
