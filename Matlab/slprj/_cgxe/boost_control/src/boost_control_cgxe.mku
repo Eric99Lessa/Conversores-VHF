@@ -8,7 +8,7 @@ LD = $(CC)
  
 MODEL  = boost_control
 TARGET = cgxe
-MODULE_SRCS 	= m_6xrqX5qITXgQNjIsHQxKhB.c m_Vk25VrZsrlIfY8DkqnY5WG.c
+MODULE_SRCS 	= m_OmrnQES9qogeQTNCDGc0yB.c
 MODEL_SRC	= boost_control_cgxe.c
 MODEL_REG    = boost_control_cgxe_registry.c
 MAKEFILE    = boost_control_cgxe.mku

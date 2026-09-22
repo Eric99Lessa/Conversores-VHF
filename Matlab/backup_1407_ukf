@@ -1,0 +1,340 @@
+function [D_bot, D_top, debug_obs, debug_deriv, debug_ctrl] = fcn(Vin_m, Vout_m, IL_m, converter_mode, Vout_ref, Ts, n_phases)
+%#codegen
+    persistent lambda alpha beta kappa Wm Wc ...
+        x_pred theta_pred P_pred sigma_pred ...
+        Q R_meas ...
+        D_bot_last D_top_last ...
+        int_eVout initialized
+
+    %% Fixed dimensions
+    n_states = n_phases + 2;          % n_phases currents + Vout + Vin
+    n_theta  = n_phases*3 + 4;        % 1/L, RL/L, VD/L per phase + 1/C, G/C, Idc/C, CP/C
+    n_params = n_states + n_theta;
+    n_meas   = n_phases + 2;          % IL (n_phases) + Vout + Vin
+    n_sigma  = 2*n_params + 1;
+
+    %% Initialization
+    if isempty(initialized)
+        %% UKF parameters
+        alpha = 1e-3;
+        beta  = 2.0;
+        kappa = 0.0;
+
+        %% Sigma weights (scaled over full augmented state n_params)
+        lambda = (n_params + kappa)*alpha^2 - n_params;
+
+        Wm = zeros(n_sigma, 1);
+        Wc = zeros(n_sigma, 1);
+
+        Wm(1) = lambda / (n_params + lambda);
+        Wc(1) = lambda / (n_params + lambda) + (1 - alpha^2 + beta);
+
+        for i = 2:n_sigma
+            Wm(i) = 1 / (2*(n_params + lambda));
+            Wc(i) = 1 / (2*(n_params + lambda));
+        end
+
+        %% Initial state estimate
+        x_pred = [IL_m(1:n_phases); Vout_m; Vin_m];
+
+        %% Nominal plant parameters
+        L_nom    = 80e-3;
+        C_nom    = 12e-3;
+        RL_nom   = 10e-3;
+        VD_nom   = 0.8;
+        G_load   = 0;
+        Idc_load = 0;
+        CP_load  = 0;
+
+        L  = L_nom  * ones(n_phases, 1);
+        RL = RL_nom * ones(n_phases, 1);
+        VD = VD_nom * ones(n_phases, 1);
+        C  = C_nom;
+
+        theta_pred = zeros(n_theta, 1);
+        theta_pred(1:n_phases)              = 1./L;
+        theta_pred(n_phases+1:2*n_phases)   = RL./L;
+        theta_pred(2*n_phases+1:3*n_phases) = VD./L;
+        theta_pred(3*n_phases+1)            = 1/C;
+        theta_pred(3*n_phases+2)            = G_load/C;
+        theta_pred(3*n_phases+3)            = Idc_load/C;
+        theta_pred(3*n_phases+4)            = CP_load/C;
+
+        %% Initial covariance
+        P_pred = eye(n_params);
+
+        %% Process noise covariance
+        Q = diag([ ...
+            (1e-3^2)*ones(n_phases, 1); ...  % IL
+            (1e-3^2); ...                     % Vout
+            (1e-3^2); ...                     % Vin
+            0*(1e-3^2)*ones(n_phases, 1); ...  % 1/L
+            0*(1e-3^2)*ones(n_phases, 1); ...  % RL/L
+            0*(1e-3^2)*ones(n_phases, 1); ...  % VD/L
+            0*(1e-3^2); ...                     % 1/C
+            0*(1e-3^2); ...                     % G_load/C
+            0*(1e-3^2); ...                     % Idc_load/C
+            0*(1e-3^2)  ...                     % CP_load/C
+        ]);
+
+        %% Measurement noise covariance
+        sigma_iL   = 0.1;
+        sigma_Vout = 0.1;
+        sigma_Vin  = 0.1;
+
+        R_meas = diag([ ...
+            sigma_iL^2 * ones(n_phases, 1); ...
+            sigma_Vout^2; ...
+            sigma_Vin^2 ...
+        ]);
+
+        %% Last duty cycle values
+        D_bot_last = zeros(n_phases, 1);
+        D_top_last = zeros(n_phases, 1);
+
+        %% Generate initial sigma points
+        sigma_pred = generate_sigma_points([x_pred; theta_pred], P_pred, n_params, n_sigma, lambda);
+
+        %% Integral term
+        int_eVout = 0.0;
+
+        initialized = true;
+    end
+
+    %% Measurement vector at current sample
+    z = [IL_m(1:n_phases); Vout_m; Vin_m];
+
+    %% UKF update step
+    [x_hat, theta_hat, P_hat] = ukf_update_partial_state( ...
+        x_pred, theta_pred, P_pred, sigma_pred, n_states, n_params, n_meas, n_sigma, Wm, Wc, z, R_meas);
+
+    %% Apply physical constraints (states must be >= 0)
+    for k = 1:n_states
+        x_hat(k) = max(x_hat(k), 0.0);
+    end
+
+    %% Extract updated states
+    IL   = x_hat(1:n_phases);
+    Vout = x_hat(n_phases+1);
+    Vin  = x_hat(n_phases+2);
+
+    %% Recover physical parameters from theta_hat
+    invL     = theta_hat(1:n_phases);
+    RLoverL  = theta_hat(n_phases+1:2*n_phases);
+    VDoverL  = theta_hat(2*n_phases+1:3*n_phases);
+    invC     = theta_hat(3*n_phases+1);
+    GoverC   = theta_hat(3*n_phases+2);
+    IdcoverC = theta_hat(3*n_phases+3);
+    CPoverC  = theta_hat(3*n_phases+4);
+
+    % Recover physical values (guard against division by zero)
+    L_est    = 1 ./ max(invL,    1e-6);
+    C_est    = 1  / max(invC,    1e-9);
+    RL_est   = RLoverL .* L_est;
+    VD_est   = VDoverL .* L_est;
+    G_load   = GoverC   * C_est;
+    Idc_load = IdcoverC * C_est;
+    CP_load  = CPoverC  * C_est;
+
+    %% Load current estimates
+    I_load     = G_load*Vout     + Idc_load + CP_load/(Vout     + 1e-3);
+    I_load_ref = G_load*Vout_ref + Idc_load + CP_load/(Vout_ref + 1e-3);
+
+    %% Derivatives via model Jacobian
+    u_last = [D_bot_last; D_top_last];
+    jac_theta = model_interleaved_converter(x_hat, u_last, converter_mode, n_phases);
+    x_dot = jac_theta * theta_hat;
+
+    IL_dot   = x_dot(1:n_phases);
+    Vout_dot = x_dot(n_phases+1);
+
+    %% Voltage error and integral
+    e_Vout = Vout_ref - Vout;
+    if abs(e_Vout) < 0.5*max(Vout_ref, 1.0)
+        int_eVout = int_eVout + e_Vout * Ts;
+    end
+
+    %% Control laws (placeholder — extend as needed)
+    % dictionary("IDAPBC", 0, "Krasovskii", 1, "CascadeModelBased", 2, "CascadeModelFree", 3)
+    if converter_mode == 0  % Buck
+        d_bot = 0.5 * ones(n_phases, 1);
+        d_top = zeros(n_phases, 1);
+    else                    % Boost
+        d_bot = zeros(n_phases, 1);
+        d_top = 0.5 * ones(n_phases, 1);
+    end
+    u = [d_bot; d_top];
+    D_bot_last = d_bot;
+    D_top_last = d_top;
+    D_bot = zeros(3, 1);
+    D_top = zeros(3, 1);
+    D_bot(1:n_phases) = d_bot;
+    D_top(1:n_phases) = d_top;
+
+    %% UKF prediction step
+    [x_pred, theta_pred, P_pred, sigma_pred] = ukf_predict( ...
+        x_hat, theta_hat, u, P_hat, n_states, n_params, n_sigma, Q, Ts, lambda, Wm, Wc, converter_mode, n_phases);
+
+    %% Debug outputs (fixed size 40 / 11 / 25 for Simulink bus compatibility)
+    debug_obs = zeros(40, 1);
+    debug_obs(1:n_meas)            = z - x_pred(1:n_meas);
+    debug_obs(6:6+n_meas-1)        = z - x_hat(1:n_meas);
+    debug_obs(11:10+n_phases)      = IL;
+    debug_obs(14)                  = Vout;
+    debug_obs(15)                  = Vin;
+    debug_obs(16)                  = I_load;
+    debug_obs(17)                  = G_load;
+    debug_obs(18)                  = Idc_load;
+    debug_obs(19)                  = CP_load;
+    debug_obs(20)                  = I_load_ref;
+    debug_obs(21:20+n_phases)      = L_est;
+    debug_obs(24)                  = C_est;
+    debug_obs(25:24+n_phases)      = RL_est;
+    debug_obs(28:27+n_phases)      = VD_est;
+
+    debug_deriv = zeros(11, 1);
+    debug_deriv(1:n_phases) = IL_dot;
+    debug_deriv(n_phases+1) = Vout_dot;
+
+    debug_ctrl = zeros(25, 1);
+    debug_ctrl(2) = Vout_ref;
+    debug_ctrl(4) = int_eVout;
+end
+
+%% -----------------------------------------------------------------------
+function jac_theta = model_interleaved_converter(x, u, converter_mode, n_phases)
+    IL   = x(1:n_phases);
+    Vout = x(n_phases+1);
+    Vin  = x(n_phases+2);
+
+    n_theta = n_phases*3 + 4;
+    % n_states = n_phases + 2;
+
+    if converter_mode == 0  % Boost: bottom switch active
+        d_bot = u(1:n_phases);
+        % dIL/dtheta rows: [1/L terms | RL/L terms | VD/L terms | zeros(load params)]
+        row_IL = [diag(Vin - (1 - d_bot).*Vout), diag(-IL), diag(-(1 - d_bot)), zeros(n_phases, 4)];
+        % dVout/dtheta row
+        row_Vout = [zeros(1, n_phases), zeros(1, n_phases), zeros(1, n_phases), ...
+                    sum(IL.*(1 - d_bot)), -Vout, -1, -1/(Vout + 1e-3)];
+        % dVin/dtheta row (Vin treated as slow-varying / disturbance)
+        row_Vin = zeros(1, n_theta);
+    else                    % Buck: top switch active
+        d_top = u(n_phases+1:2*n_phases);
+        row_IL = [diag(Vin.*d_top - Vout), diag(-IL), diag(-(1 - d_top)), zeros(n_phases, 4)];
+        row_Vout = [zeros(1, n_phases), zeros(1, n_phases), zeros(1, n_phases), ...
+                    sum(IL), -Vout, -1, -1/(Vout + 1e-3)];
+        row_Vin = zeros(1, n_theta);
+    end
+
+    jac_theta = [row_IL; row_Vout; row_Vin];
+end
+
+%% -----------------------------------------------------------------------
+function [x_pred, theta_pred, P_pred, sigma_pred] = ukf_predict( ...
+    x, theta, u, P, n_states, n_params, n_sigma, Q, Ts, lambda, Wm, Wc, converter_mode, n_phases)
+
+    %% Generate sigma points
+    sigma = generate_sigma_points([x; theta], P, n_params, n_sigma, lambda);
+
+    %% Propagate sigma points through process model
+    sigma_pred = zeros(n_params, n_sigma);
+
+    for i = 1:n_sigma
+        xi = sigma(1:n_states, i);
+        ti = sigma(n_states+1:end, i);
+        Ji = model_interleaved_converter(xi, u, converter_mode, n_phases);
+        sigma_pred(1:n_states, i)      = xi + Ts * Ji * ti;
+        sigma_pred(n_states+1:end, i)  = ti;  % parameters are constant
+    end
+
+    %% Predicted mean
+    sigma_mean_pred = zeros(n_params, 1);
+    for i = 1:n_sigma
+        sigma_mean_pred = sigma_mean_pred + Wm(i) * sigma_pred(:, i);
+    end
+    x_pred     = sigma_mean_pred(1:n_states);
+    theta_pred = sigma_mean_pred(n_states+1:end);
+
+    %% Predicted covariance
+    P_pred = zeros(n_params, n_params);
+    for i = 1:n_sigma
+        dx     = sigma_pred(:, i) - sigma_mean_pred;
+        P_pred = P_pred + Wc(i) * (dx * dx');
+    end
+    P_pred = 0.5*(P_pred + P_pred') + Q;
+end
+
+%% -----------------------------------------------------------------------
+function [x_update, theta_update, P_update] = ukf_update_partial_state( ...
+    x_pred, theta_pred, P_pred, sigma_pred, n_states, n_params, n_meas, n_sigma, Wm, Wc, z, R_meas)
+
+    %% Measurement sigma points (first n_meas rows of state)
+    Z_sigma = sigma_pred(1:n_meas, :);
+
+    %% Predicted measurement mean
+    z_pred = zeros(n_meas, 1);
+    for i = 1:n_sigma
+        z_pred = z_pred + Wm(i) * Z_sigma(:, i);
+    end
+
+    %% Innovation covariance
+    S = zeros(n_meas, n_meas);
+    for i = 1:n_sigma
+        dz = Z_sigma(:, i) - z_pred;
+        S  = S + Wc(i) * (dz * dz');
+    end
+    S = 0.5*(S + S') + R_meas + 1e-9*eye(n_meas);
+
+    %% Cross covariance
+    x_theta_pred = [x_pred; theta_pred];
+    Pxz = zeros(n_params, n_meas);
+    for i = 1:n_sigma
+        dx  = sigma_pred(:, i) - x_theta_pred;
+        dz  = Z_sigma(:, i)    - z_pred;
+        Pxz = Pxz + Wc(i) * (dx * dz');
+    end
+
+    %% Kalman gain and update
+    K = Pxz / S;
+    y = z - z_pred;
+
+    x_theta_update = x_theta_pred + K * y;
+    x_update       = x_theta_update(1:n_states);
+    theta_update   = x_theta_update(n_states+1:end);
+
+    P_update = 0.5*(P_pred - K*S*K');
+    P_update = 0.5*(P_update + P_update');
+end
+
+%% -----------------------------------------------------------------------
+function sigma = generate_sigma_points(x, P, n_params, n_sigma, lambda)
+    sigma    = zeros(n_params, n_sigma);
+    sigma(:,1) = x;
+
+    P      = 0.5*(P + P');
+    jitter = 1e-9;
+    S      = zeros(n_params);
+    success = false;
+
+    for attempt = 1:8
+        [S_temp, flag] = chol((n_params + lambda)*P + jitter*eye(n_params), 'lower');
+        if flag == 0
+            S       = S_temp;
+            success = true;
+            break;
+        else
+            jitter = jitter * 10;
+        end
+    end
+
+    if ~success
+        P = P + 1e-6*eye(n_params);
+        S = chol((n_params + lambda)*P, 'lower');
+    end
+
+    for i = 1:n_params
+        sigma(:, i+1)          = x + S(:, i);
+        sigma(:, i+1+n_params) = x - S(:, i);
+    end
+end

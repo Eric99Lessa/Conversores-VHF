@@ -1,4 +1,6 @@
 clear; clc; close all;
+
+testsFolder = getTestsFolder(pwd);
 %% Abre arquivo
 
 % filename = "teste_1901.csv";
@@ -6,12 +8,13 @@ clear; clc; close all;
 % filename = "teste_1901_2.csv";
 % filename = "teste_1901_3.csv";
 % filename = "teste_1901_4.csv";
-filename = "teste_2101_4.csv";
+% filename = "teste_2101_4.csv";
 % filename = "teste_2201_2.csv";
 % filename = "teste_2301_1.csv";
-R_ensaio = 4.97; %R_ensaio = 2.5;
+filename = "teste_0707_pi_3.csv";
+R_ensaio = 2.8; %R_ensaio = 2.5;
 C_out = 831e-6;
-T = readmatrix(filename);
+T = readmatrix(testsFolder + filename);
 
 %% Divide em arrays de acordo com o nome da coluna
 % ordem: t seq Vin Vout IL1 IL2 IL3 ILout du dv dw
@@ -64,7 +67,7 @@ figure(2)
 subplot(3, 1, 1)
 plot(t, IL, 'LineWidth', 2.5); hold on;
 % plot(t, Iout, 'LineWidth', 2);
-plot(t, Iout_est, 'LineWidth', 2.5);
+% plot(t, Iout_est, 'LineWidth', 2.5);
 grid on; grid minor;
 ax = gca;
 ax.FontSize = 14;

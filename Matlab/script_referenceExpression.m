@@ -13,8 +13,8 @@ syms converter n_phases
 IL_ref = piecewise(sym(1) == sym(1), 0);
 d_ref = piecewise(sym(1) == sym(1), 0);
 
-ns_phases = 1:3;
-convs = ["Buck" "Boost" "BuckBoost"];
+ns_phases = 3;
+convs = ["Boost" "Buck" "BuckBoost"];
 
 for conv = convs
     for n = ns_phases
@@ -30,4 +30,3 @@ if save_expr
     matlabFunction(IL_ref, 'File', "IL_ref_expr", 'Optimize', false);
     matlabFunction(d_ref, 'File', "d_ref_expr", 'Optimize', false);
 end
-

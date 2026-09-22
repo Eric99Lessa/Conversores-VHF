@@ -30,5 +30,8 @@ for i = 1:length(base_names)
         eval([base ' = sym(''' base ''', [' num2str(length(X_dot)) ' 1], "real");']);
     else
         eval([base ' = sym(''' base ''', [' num2str(len_symbols(i)) ' 1], "real");']);
+        if base == 'd'
+            assume([d > 0, d < 1])
+        end
     end
 end

@@ -1,0 +1,611 @@
+clear; clc; close all;
+ clear controller_mtlbfun;
+
+%% Load data
+load('boost_data.mat')
+
+N = length(td);
+n_phases = min(size(IL_m));
+Vout_ref = 24;
+converter_mode = 0;
+
+%% Initialize store vars
+D_bot = zeros(n_phases, N);
+D_top = zeros(n_phases, N);
+IL_eq = zeros(N, 1);
+IL_est = zeros(N, n_phases);
+IL_dot_filt = zeros(N, n_phases);
+IL_dot_model = zeros(N, n_phases);
+Vout_dot_filt = zeros(N, 1);
+Vout_dot_model = zeros(N, 1);
+Vin_dot_filt = zeros(N, 1);
+LV_est = zeros(N, 1);
+HV_est = zeros(N, 1);
+Pin = zeros(N, 1);
+Pout = zeros(N, 1);
+PR = zeros(N, 1);
+PD = zeros(N, 1);
+PL = zeros(N, 1);
+PC = zeros(N, 1);
+res_P = zeros(N, 1);
+RL_est = zeros(N, n_phases);
+VD_est = zeros(N, n_phases);
+I_load_est = zeros(N, 1);
+I_load_model = zeros(N, 1);
+I_load_dot = zeros(N, 1);
+I_load_dot_model = zeros(N, 1);
+Pout_dot = zeros(N, 1);
+Pout_dot_model = zeros(N, 1);
+G_load_est = zeros(N, 1);
+Idc_load_est = zeros(N, 1);
+CP_load_est = zeros(N, 1);
+
+for i = 1:N
+    Vin_m = LV_m(i);
+    Vout_m = HV_m(i);
+    [D_bot(:, i), D_top(:, i), debug_obs, debug_deriv, debug_ctrl] = controller_mtlbfun(Vin_m, Vout_m, IL_m(i, :)', converter_mode, Vout_ref, Ts);
+    
+    IL_eq(i) = debug_ctrl(7);
+    IL_est(i, :) = debug_obs(1:3)';
+    IL_dot_filt(i, :) = debug_deriv(1:3)';
+    IL_dot_model(i, :) = debug_deriv(7:9)';
+    Vout_dot_filt(i) = debug_deriv(4);
+    Vin_dot_filt(i) = debug_deriv(5);
+    Vout_dot_model(i) = debug_deriv(10);
+    HV_est(i) = debug_obs(4);
+    LV_est(i) = debug_obs(5);
+    Pin(i) = debug_obs(26);
+    Pout(i) = debug_obs(27);
+    PR(i) = debug_obs(28);
+    PD(i) = debug_obs(29);
+    PL(i) = debug_obs(30);
+    PC(i) = debug_obs(31);
+    res_P(i) = debug_obs(32);
+    RL_est(i, :) = debug_obs(17:19);
+    VD_est(i, :) = debug_obs(20:22);
+    I_load_est(i) = debug_obs(6);
+    G_load_est(i) = debug_obs(23);
+    Idc_load_est(i) = debug_obs(24);
+    CP_load_est(i) = debug_obs(25);
+    I_load_model(i) = G_load_est(i)*HV_est(i) + Idc_load_est(i) + CP_load_est(i)/(HV_est(i) + 0.001);
+    I_load_dot(i) = debug_deriv(6);
+    I_load_dot_model(i) = (G_load_est(i) - CP_load_est(i)/(HV_est(i)^2 + 0.001))*Vout_dot_filt(i);
+    Pout_dot(i) = HV_est(i)*I_load_dot(i) + Vout_dot_filt(i)*I_load(i);
+    Pout_dot_model(i) = (2*G_load_est(i)*HV_est(i) + Idc_load_est(i))*Vout_dot_filt(i);
+end
+Vout_dot_raw = [0; diff(HV_est)/Ts];
+Vin_dot_raw = [0; diff(LV_est)/Ts];
+IL_dot_raw = [0 0 0; diff(IL_est)/Ts];
+
+%% Plots Controle
+
+% Plot Tensão
+id_fig = 1;
+figure(id_fig)
+subplot(2, 1, 1)
+plot(tc, LV, 'lineWidth', 2); hold on;
+plot(tc, HV, 'lineWidth', 2); hold on;
+yline(Vout_ref, '--', 'LineWidth', 2);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Tensão (V)', 'FontSize', 14);
+if converter_mode == 0
+    legend('Entrada', 'Saída', 'Referência', 'FontSize', 14, 'Location', 'best');
+elseif converter_mode == 1
+    legend('Saída', 'Entrada', 'Referência', 'FontSize', 14, 'Location', 'best');
+else
+    legend('Bateria', 'Barramento', 'Referência', 'FontSize', 14, 'Location', 'best');
+end
+title('Tensões de Entrada e Saída', 'FontSize', 18);
+
+subplot(2, 1, 2)
+if converter_mode == 0
+    plot(td, D_bot, 'lineWidth', 2);
+else
+    plot(td, D_top, 'LineWidth', 2);
+end
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Duty Cycle (%)', 'FontSize', 14);
+legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+title('Duty Cycle (%)', 'FontSize', 18);
+
+% Plot Corrente
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(2, 1, 1)
+plot(tc, IL, 'lineWidth', 2); hold on;
+plot(td, IL_eq, '--', 'lineWidth', 2); hold on;
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("Corrente (A)");
+legend("IL1", "IL2", "IL3", "Referencia", 'Location','best')
+title('Correntes nos indutores', 'FontSize', 18);
+
+subplot(2, 1, 2)
+if converter_mode == 0
+    plot(td, D_bot, 'lineWidth', 2);
+else
+    plot(td, D_top, 'LineWidth', 2);
+end
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Duty Cycle (%)', 'FontSize', 14);
+legend('U', 'V', 'W', 'FontSize', 14, 'Location', 'best');
+title('Duty Cycle (%)', 'FontSize', 18);
+
+%% Plots Observador
+% Plot Tensões
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(2, 2, 1)
+plot(td, LV_m, 'lineWidth', 2); hold on;
+plot(td, LV_est, 'lineWidth', 2); hold on;
+title('Tensões estimadas', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('V_{ìn} (V)', 'FontSize', 14);
+legend('Medida', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(2, 2, 3)
+plot(td, HV_m, 'lineWidth', 2); hold on;
+plot(td, HV_est, 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('V_{out} (V)', 'FontSize', 14);
+legend('Medida', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(2, 2, 2)
+plot(td, LV_m - LV_est, 'lineWidth', 2); hold on;
+title('Diferença entre medida e estimativa', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{V}_{in}$ (V)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(2, 2, 4)
+plot(td, HV_m - HV_est, 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{V}_{out}$ (V)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot Correntes
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 2, 1)
+title('Corrente nos indutores', 'FontSize', 18);
+plot(td, IL_m(:, 1), 'lineWidth', 2); hold on;
+plot(td, IL_est(:, 1), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('IL_{1} (A)', 'FontSize', 14);
+legend('Medida', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 3)
+plot(td, IL_m(:, 2), 'lineWidth', 2); hold on;
+plot(td, IL_est(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('IL_{2} (A)', 'FontSize', 14);
+legend('Medida', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 5)
+plot(td, IL_m(:, 3), 'lineWidth', 2); hold on;
+plot(td, IL_est(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('IL_{3} (A)', 'FontSize', 14);
+legend('Medida', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 2)
+plot(td, IL_m(:, 1) - IL_est(:, 1), 'lineWidth', 2); hold on;
+title('Diferença entre medida e estimativa', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{IL}_{1}$ (V)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 4)
+plot(td, IL_m(:, 2) - IL_est(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{IL}_{2}$ (V)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 6)
+plot(td, IL_m(:, 3) - IL_est(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{IL}_{3}$ (V)', 'FontSize', 14, 'Interpreter', 'latex');
+
+%%
+% Plot Derivada Tensao de saida
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, Vout_dot_raw, 'lineWidth', 2); hold on;
+plot(td, Vout_dot_filt, 'lineWidth', 2); hold on;
+title('Derivada da Tensão de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{V}_{out}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Numérica', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(1, 2, 2)
+plot(td, Vout_dot_raw - Vout_dot_filt, 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da Tensão de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{V}}_{out}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot Derivada Tensao de entrada
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, Vin_dot_raw, 'lineWidth', 2); hold on;
+plot(td, Vin_dot_filt, 'lineWidth', 2); hold on;
+title('Derivada da Tensão de entrada', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{V}_{in}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Numérica', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(1, 2, 2)
+plot(td, Vin_dot_raw - Vin_dot_filt, 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da Tensão de entrada', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{V}}_{in}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot Derivada Correntes
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 2, 1)
+plot(td, IL_dot_raw(:, 1), 'lineWidth', 2); hold on;
+plot(td, IL_dot_filt(:, 1), 'lineWidth', 2); hold on;
+title('Derivada da corrente nos indutores', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{1}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Numérica', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 3)
+plot(td, IL_dot_raw(:, 2), 'lineWidth', 2); hold on;
+plot(td, IL_dot_filt(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{2}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Numérica', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 5)
+plot(td, IL_dot_raw(:, 3), 'lineWidth', 2); hold on;
+plot(td, IL_dot_filt(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{3}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Numérica', 'Estimativa', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 2)
+plot(td, IL_dot_raw(:, 1) - IL_dot_filt(:, 1), 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da corrente nos indutores', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{1}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 4)
+plot(td, IL_dot_raw(:, 2) - IL_dot_filt(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{2}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 6)
+plot(td, IL_dot_raw(:, 3) - IL_dot_filt(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{3}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot Derivada Correntes
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 2, 1)
+plot(td, IL_dot_filt(:, 1), 'lineWidth', 2); hold on;
+plot(td, IL_dot_model(:, 1), 'lineWidth', 2); hold on;
+title('Derivada da corrente nos indutores', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{1}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 3)
+plot(td, IL_dot_filt(:, 2), 'lineWidth', 2); hold on;
+plot(td, IL_dot_model(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{2}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 5)
+plot(td, IL_dot_filt(:, 3), 'lineWidth', 2); hold on;
+plot(td, IL_dot_model(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{IL}_{3}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(3, 2, 2)
+plot(td, IL_dot_filt(:, 1) - IL_dot_model(:, 1), 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da corrente nos indutores', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{1}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 4)
+plot(td, IL_dot_filt(:, 2) - IL_dot_model(:, 2), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{2}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+subplot(3, 2, 6)
+plot(td, IL_dot_filt(:, 3) - IL_dot_model(:, 3), 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{IL}}_{3}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot Derivada Tensao de saida
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, Vout_dot_filt, 'lineWidth', 2); hold on;
+plot(td, Vout_dot_model, 'lineWidth', 2); hold on;
+% plot(td, [0; diff(HV_est)/Ts], 'lineWidth', 2); hold on;
+title('Derivada da Tensão de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{V}_{out}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(1, 2, 2)
+plot(td, Vout_dot_filt - Vout_dot_model, 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da Tensão de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{V}}_{out}$ (V/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Potência de entrada e saída
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 1, 1)
+plot(td, Pin, 'LineWidth', 2.5); hold on;
+plot(td, Pout, 'LineWidth', 2.5); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Potência (W)', 'FontSize', 14);
+legend('Entrada', 'Saída', 'FontSize', 14, 'Location', 'best');
+title('Potências na Entrada e Saída', 'FontSize', 18)
+
+subplot(3, 1, 2)
+plot(td, 100*Pout./Pin, 'LineWidth', 2.5); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Eficiência (-)', 'FontSize', 14);
+
+subplot(3, 1, 3)
+plot(td, PR, 'LineWidth', 2.5); hold on;
+plot(td, PD, 'LineWidth', 2.5); hold on;
+plot(td, PL, 'LineWidth', 2.5); hold on;
+plot(td, PC, 'LineWidth', 2.5); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Potência (W)', 'FontSize', 14);
+legend('Resistência', 'Diodo', 'Indutor', 'Capacitor', 'FontSize', 14, 'Location', 'best');
+
+% Corrente da carga
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(tc, I_load, 'lineWidth', 2); hold on;
+plot(td, I_load_est, 'lineWidth', 2);
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("I_{load} (A)");
+legend("Saída", "Saída estimada", 'Location','best')
+title('Correntes de Saída', 'FontSize', 18);
+
+subplot(1, 2, 2)
+plot(td, interp1(tc, I_load, td, 'linear' ,'extrap') - I_load_est, 'lineWidth', 2); hold on;
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("$\tilde{I}_{load}$ (A)", 'interpreter', 'latex');
+title('Diferença Corrente de Saída', 'FontSize', 18);
+
+% Corrente da carga
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, I_load_est, 'lineWidth', 2); hold on;
+plot(td, I_load_model, 'lineWidth', 2);
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("I_{load} (A)");
+legend("Saída estimada", "Modelo", 'Location','best')
+title('Correntes de Saída', 'FontSize', 18);
+
+subplot(1, 2, 2)
+plot(td, I_load_est - I_load_model, 'lineWidth', 2); hold on;
+grid on; grid minor;
+xlabel("Tempo (s)");
+ylabel("$\tilde{I}_{load}$ (A)", 'interpreter', 'latex');
+title('Diferença Corrente de Saída', 'FontSize', 18);
+
+% Plot derivada da corrente de saída
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, I_load_dot, 'lineWidth', 2); hold on;
+plot(td, I_load_dot_model, 'lineWidth', 2); hold on;
+title('Derivada da Corrente de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{I}_{load}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(1, 2, 2)
+plot(td, I_load_dot - I_load_dot_model, 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da Corrente de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{I}}_{load}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Plot derivada da potencia de saída
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(1, 2, 1)
+plot(td, Pout_dot, 'lineWidth', 2); hold on;
+plot(td, Pout_dot_model, 'lineWidth', 2); hold on;
+title('Derivada da potencia de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\dot{P}_{out}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+legend('Estimativa', 'Modelo', 'FontSize', 14, 'Location', 'best');
+
+subplot(1, 2, 2)
+plot(td, Pout_dot - Pout_dot_model, 'lineWidth', 2); hold on;
+title('Diferença entre Derivada da potencia de saída', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('$\tilde{\dot{P}}_{out}$ (A/s)', 'FontSize', 14, 'Interpreter', 'latex');
+
+% Carga
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(3, 1, 1)
+plot(td, G_load_est, 'lineWidth', 2); hold on;
+title('Parametros Modelo Carga', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('G_{load} (S)', 'FontSize', 14);
+
+subplot(3, 1, 2)
+plot(td, Idc_load_est, 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Idc_{load} (A)', 'FontSize', 14);
+
+subplot(3, 1, 3)
+plot(td, CP_load_est, 'lineWidth', 2); hold on;
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('CP_{load} (W)', 'FontSize', 14);
+
+%% Plots Parametros
+
+id_fig = id_fig + 1;
+figure(id_fig)
+subplot(2, 1, 1)
+plot(td, RL_est, 'lineWidth', 2); hold on;
+title('Resistência dos indutores', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('R_{L} (ohm)', 'FontSize', 14);
+legend('L_{1}', 'L_{2}', 'L_{3}', 'FontSize', 14, 'Location', 'best');
+
+subplot(2, 1, 2)
+plot(td, VD_est, 'lineWidth', 2); hold on;
+title('Tensão nos diodos', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('V_{D} (V)', 'FontSize', 14);
+legend('L_{1}', 'L_{2}', 'L_{3}', 'FontSize', 14, 'Location', 'best');
+
+id_fig = id_fig + 1;
+figure(id_fig)
+plot(td, res_P, 'lineWidth', 2); hold on;
+title('Resíduo potencia', 'FontSize', 18);
+grid on; grid minor;
+ax = gca;
+ax.FontSize = 14;
+xlabel('Tempo (s)', 'FontSize', 14);
+ylabel('Resíduo (W)', 'FontSize', 14);

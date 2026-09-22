@@ -1,0 +1,349 @@
+function [D_bot, D_top, debug_obs, debug_deriv, debug_ctrl] = controller_mtlbfun(Vin_m, Vout_m, IL_m, converter_mode, Vout_ref, Ts)
+%#codegen
+    persistent cont ...
+        L C RL VD ...
+        RL_min RL_max VD_min VD_max...
+        y_pred y_dot_pred ...
+        p11 p12 p22 ... 
+        R_meas Q Q_dot ...
+        gamma_RL gamma_VD ...
+        beta_1_load beta_2_load ...
+        v_load m_load alpha_load theta_load ...
+        P_max theta_load_min theta_load_max ... 
+        beta_RL beta_VD RL_dot VD_dot ...
+        D_bot_last D_top_last ...
+        int_eVout initialized
+
+    %% Fixed dimensions
+    n_phases = 3;
+    n_meas = n_phases + 2;
+    n_est = n_meas + 1;
+
+    %% Initialization
+    if isempty(initialized)
+        cont = 0;
+
+        %% 
+        D_bot_last = zeros(n_phases, 1);
+        D_top_last = zeros(n_phases, 1);
+
+        %% Integral term
+        int_eVout = 0.0;
+
+        %% Parameters
+        L_nom   = 80/1000;
+        C_nom   = 12/1000;
+        L = L_nom*ones(n_phases, 1);
+        RL = 10e-3*ones(n_phases, 1);
+        VD  = 0.8*ones(n_phases, 1);
+        C = C_nom;
+
+        beta_1_load = 1/(2*pi*10*Ts + 1);
+        beta_2_load = 0.99;
+        m_load = [0; 0; 0];
+        v_load = [0; 0; 0];
+        alpha_load = Ts*[1; 100; 0];
+        theta_load = [0; 0; 0];
+
+        P_max = 15000;
+        theta_load_min = zeros(3, 1);
+        theta_load_max = P_max./[Vout_ref^2; Vout_ref; 1];
+
+        %
+        RL_min = 1e-3;
+        RL_max = 1e-1;
+        VD_min = 0.5;
+        VD_max = 1.8;
+        
+        %% 
+        gamma_RL = 0.001;
+        gamma_VD = 0.05;
+        RL_dot = zeros(n_phases, 1);
+        VD_dot = zeros(n_phases, 1);
+        beta_RL = 0.95;
+        beta_VD = 0.95;
+        
+        %% 
+        y_pred = zeros(n_est, 1);
+        y_pred(1:3) = IL_m;
+        y_pred(4) = Vout_m;
+        y_pred(5) = Vin_m;
+        
+        y_dot_pred = zeros(n_est, 1);
+        p11 = ones(n_est, 1);
+        p12 = zeros(n_est, 1);
+        p22 = ones(n_est, 1);
+
+        q_IL    = 1e-4;
+        q_dIL   = 1e0;   % main knob: derivative tracking speed
+        q_Vout  = 1e-4;
+        q_dVout = 1e0;
+        q_Vin   = 1e-4;
+        q_dVin   = 1e0;
+        q_Iload = 1e-4;
+        q_dIload = 1e0;
+        Q = [q_IL*ones(n_phases, 1); q_Vout; q_Vin; q_Iload];
+        Q_dot = [q_dIL*ones(n_phases, 1); q_dVout; q_dVin; q_dIload];
+        
+        % Measurement noise
+        sigma_iL     = 0.1;
+        sigma_Vout   = 0.1;
+        sigma_Vin    = 0.1;
+        sigma_Iload  = 0.1;   % ← PRIMARY SMOOTHING KNOB for Iload
+                               %   larger  → smoother Iload, slower to react
+                               %   smaller → Iload tracks node equation tightly
+        
+        R_meas = [
+            sigma_iL^2   * ones(n_phases, 1);
+            sigma_Vout^2;
+            sigma_Vin^2;
+            sigma_Iload^2                      % pseudo-measurement noise
+        ];
+
+        initialized = true;
+    end
+
+    %% Measurements
+    idx_IL = 1:n_phases;
+    idx_Vout = 4;
+    idx_Vin = 5;
+    idx_I_load = 6;
+    y = zeros(n_est, 1);
+    y(idx_IL) = IL_m(idx_IL);
+    y(idx_Vout) = Vout_m;
+    y(idx_Vin) = Vin_m;
+
+    %% Update
+    IL = zeros(n_phases, 1);
+    IL_dot = zeros(n_phases, 1);
+    for i = 1:n_phases
+        [IL(i), IL_dot(i), p11(i), p12(i), p22(i)] = update_scalar_kf(y_pred(i), y_dot_pred(i), p11(i), p12(i), p22(i), y(i), R_meas(i));
+    end
+
+    [Vout, Vout_dot, p11(idx_Vout), p12(idx_Vout), p22(idx_Vout)] = update_scalar_kf( ...
+        y_pred(idx_Vout), y_dot_pred(idx_Vout), p11(idx_Vout), p12(idx_Vout), p22(idx_Vout), y(idx_Vout), R_meas(idx_Vout));
+
+    [Vin, Vin_dot, p11(idx_Vin), p12(idx_Vin), p22(idx_Vin)] = update_scalar_kf( ...
+        y_pred(idx_Vin), y_dot_pred(idx_Vin), p11(idx_Vin), p12(idx_Vin), p22(idx_Vin), y(idx_Vin), R_meas(idx_Vin));
+
+    if converter_mode == 0
+        y(idx_I_load) = sum(IL.*(1 - D_bot_last)) - C*Vout_dot;
+    else
+        y(idx_I_load) = sum(IL) - C*Vout_dot;
+    end
+
+    [I_load, I_load_dot, p11(idx_I_load), p12(idx_I_load), p22(idx_I_load)] = update_scalar_kf( ...
+        y_pred(idx_I_load), y_dot_pred(idx_I_load), p11(idx_I_load), p12(idx_I_load), p22(idx_I_load), y(idx_I_load), R_meas(idx_I_load));
+
+    %% Power equations
+    Pin = Vin*sum(IL); % Input power
+    Pout = Vout*I_load; % Output power
+    PR = sum(RL.*IL.*IL); % Resistive losses
+    if converter_mode == 0
+        PD = sum(VD.*(1 - D_bot_last).*IL); % Diode losses
+    else
+        PD = sum(VD.*(1 - D_top_last).*IL); % Diode losses
+    end
+    PL = sum(L.*IL.*IL_dot); % Inductive loading
+    PC = C*Vout*Vout_dot; % Capacitive loading
+
+    %% Derivatives by model
+    if converter_mode == 0
+        IL_dot_model = (Vin - RL.*IL - (Vout + VD).*(1 - D_bot_last))./L;
+        Vout_dot_model = (sum(IL.*(1 - D_bot_last)) - I_load)/C;
+    else
+        IL_dot_model = ((Vin + VD).*D_top_last - RL.*IL - Vout - VD)./L;
+        Vout_dot_model = (sum(IL) - I_load)/C;
+    end
+    
+    %% MRAC to better estimate parameters
+    % power residual
+    res_P = Pin - Pout - PR - PD - PL - PC;
+
+    % current residual
+    y_IL = Vin - Vout*(1 - D_bot_last) - L.*IL_dot;
+    y_IL_hat = RL.*IL + VD.*(1 - D_bot_last);
+    res_IL = y_IL - y_IL_hat;
+
+    % gradient
+    grad_IL_dot = zeros(2, 3);
+    for i = 1:n_phases
+        grad_IL_dot(:, i) = res_IL(i)*[IL(i); 1 - D_bot_last(i)];
+    end 
+
+    % filter gradient and squared gradient
+    m_sys = beta_1_sys*m_sys + (1 - beta_1_sys)*grad_IL_dot;
+    v_sys = beta_2_sys*v_sys + (1 - beta_2_sys)*(grad_IL_dot - m_sys).^2;
+
+    % bias fix
+    m_sys_hat = m_sys/(1 - beta_1_sys^((cont + 1)*Ts));
+    v_sys_hat = v_sys/(1 - beta_2_sys^((cont + 1)*Ts));
+
+    % Update
+    theta_sys = theta_sys + alpha_sys.*m_sys_hat./sqrt(v_sys_hat + 1e-8);
+
+    % Update
+    % w_P = 0.05;
+    % w_IL = 1 - w_P;
+    % grad_RL_raw = gamma_RL*(w_IL*res_IL.*IL + w_P*res_P.*IL.^2);
+    % grad_VD_raw = gamma_VD*(w_IL*res_IL.*(1 - D_bot_last) + w_P*res_P.*(1 - D_bot_last).*IL);
+    % RL_dot = beta_RL*RL_dot + (1 - beta_RL)*grad_RL_raw;
+    % VD_dot = beta_VD*VD_dot + (1 - beta_RL)*grad_VD_raw;
+    % RL = RL + Ts*RL_dot;
+    % VD = VD + Ts*VD_do 
+    % RL = min(max(RL, RL_min), RL_max);
+    % VD = min(max(VD, VD_min), VD_max);
+    
+    %% MRAC to load estimation  
+    G_load  = theta_load(1);
+    Idc_load = theta_load(2);
+    CP_load  = theta_load(3);
+    % Prediction
+    I_load_hat = G_load*Vout + Idc_load + CP_load/(Vout + 0.001); % I_load est
+    I_load_dot_hat = (G_load - CP_load/(Vout^2 + 0.001))*Vout_dot;
+    Pout_dot_hat = (2*G_load*Vout + Idc_load)*Vout_dot;
+    Pout_dot = Vout*I_load_dot + Vout_dot*I_load;
+    
+    % Residual
+    res_I_load = I_load - I_load_hat;
+    res_I_load_dot = I_load_dot - I_load_dot_hat;
+    res_Pout_dot = Pout_dot - Pout_dot_hat;
+
+    % Gradients
+    grad_I_load = res_I_load*[Vout; 1; 1/(Vout + 0.001)];
+    grad_I_load_dot = res_I_load_dot*[1; 0; -1/(Vout^2 + 0.001)]*Vout_dot;
+    grad_Pout_dot = res_Pout_dot*[2*Vout; 1; 0]*Vout_dot;
+    w_I = 1; w_I_dot = 0.0003; w_P_dot = 0; %0.00001;
+    grad_load = w_I*grad_I_load + ...
+                w_I_dot*grad_I_load_dot + ...
+                w_P_dot*grad_Pout_dot;
+
+    % filter gradient and squared gradient
+    m_load = beta_1_load*m_load + (1 - beta_1_load)*grad_load;
+    v_load = beta_2_load*v_load + (1 - beta_2_load)*(grad_load - m_load).^2;
+
+    % bias fix
+    m_load_hat = m_load(1 - beta_1_load^((cont + 1)*Ts));
+    v_load_hat = v_load/(1 - beta_2_load^((cont + 1)*Ts));
+
+    % Update
+    theta_load = theta_load + alpha_load.*m_load_hat./sqrt(v_load_hat + 1e-8);
+    
+    % Unpack estimates
+    theta_load = min(max(theta_load, theta_load_min), theta_load_max);
+    G_load  = theta_load(1);
+    Idc_load = theta_load(2);
+    CP_load  = theta_load(3);
+
+    %% Inductor current equilibrium
+    I_load_eq = G_load*Vout_ref + Idc_load + CP_load/(Vout_ref + 0.001);
+    I_load_eq = min(I_load_eq, P_max/Vout_ref);
+    a = sum(RL./(VD + Vout_ref));
+    b = -sum(1./(VD + Vout_ref))*Vin;
+    c = I_load_eq;
+
+    if b^2 - 4*a*c > 0
+        IL_eq = (-b - sqrt(b^2 - 4*a*c))/(2*a);
+    elseif b^2 - 4*a*I_load > 0
+        IL_eq = (-b - sqrt(b^2 - 4*a*I_load))/(2*a);
+    else
+        IL_eq = 0;
+    end
+
+    %% Voltage error and integral
+    e_Vout = Vout_ref - Vout;
+
+    if abs(e_Vout) < 0.5*max(Vout_ref, 1.0)
+        int_eVout = int_eVout + e_Vout * Ts;
+    end
+
+    %% Control laws
+    D_bot = zeros(n_phases, 1);
+    D_top = zeros(n_phases, 1);
+    if converter_mode == 0
+        D_bot(1:n_phases) = 0.5*ones(n_phases, 1) + 0.01*sin(2*6.28*cont*Ts);
+        cont = cont + 1;
+    else
+        D_top(1:n_phases) = 0.5*ones(n_phases, 1);
+    end
+    u = [D_bot; D_top];
+    D_bot_last = D_bot;
+    D_top_last = D_top;
+
+    %% Prediction
+    for i = 1:n_phases
+        [y_pred(i), y_dot_pred(i), p11(i), p12(i), p22(i)] = predict_scalar_kf(IL(i), IL_dot(i), p11(i), p12(i), p22(i), Q(i), Q_dot(i), Ts);
+    end
+    [y_pred(idx_Vout), y_dot_pred(idx_Vout), p11(idx_Vout), p12(idx_Vout), p22(idx_Vout)] = ...
+        predict_scalar_kf(Vout, Vout_dot, p11(idx_Vout), p12(idx_Vout), p22(idx_Vout), Q(idx_Vout), Q_dot(idx_Vout), Ts);
+
+    [y_pred(idx_Vin), y_dot_pred(idx_Vin), p11(idx_Vin), p12(idx_Vin), p22(idx_Vin)] = ...
+        predict_scalar_kf(Vin, Vin_dot, p11(idx_Vin), p12(idx_Vin), p22(idx_Vin), Q(idx_Vin), Q_dot(idx_Vin), Ts);
+    
+    [y_pred(idx_I_load), y_dot_pred(idx_I_load), p11(idx_I_load), p12(idx_I_load), p22(idx_I_load)] = ...
+        predict_scalar_kf(I_load, I_load_dot, p11(idx_I_load), p12(idx_I_load), p22(idx_I_load), Q(idx_I_load), Q_dot(idx_I_load), Ts);
+
+    %% Debug variables
+    debug_obs = zeros(40, 1);
+    debug_obs(idx_IL) = IL;
+    debug_obs(idx_Vout) = Vout;
+    debug_obs(idx_Vin) = Vin;
+    debug_obs(idx_I_load) = I_load;
+    debug_obs((1:n_est) + 6) = y_pred;
+    debug_obs(13:15) = L;
+    debug_obs(16) = C;
+    debug_obs(17:19) = RL;
+    debug_obs(20:22) = VD;
+    debug_obs(23) = G_load;
+    debug_obs(24) = Idc_load;
+    debug_obs(25) = CP_load;
+    debug_obs(26) = Pin;
+    debug_obs(27) = Pout;
+    debug_obs(28) = PR;
+    debug_obs(29) = PD;
+    debug_obs(30) = PL;
+    debug_obs(31) = PC;
+    debug_obs(32) = res_P;
+    debug_obs(33:35) = res_IL;
+    debug_obs(36) = res_I_load;
+
+    debug_deriv = zeros(15, 1);
+    debug_deriv(idx_IL) = IL_dot;
+    debug_deriv(idx_Vout) = Vout_dot; 
+    debug_deriv(idx_Vin) = Vin_dot;
+    debug_deriv(idx_I_load) = I_load_dot;
+    debug_deriv(n_est + idx_IL) = IL_dot_model;
+    debug_deriv(n_est + idx_Vout) = Vout_dot_model;
+
+    debug_ctrl = zeros(15, 1);
+    debug_ctrl(1:6) = u;
+    debug_ctrl(7) = IL_eq;
+    debug_ctrl(8) = int_eVout;
+end
+
+function [x_val, x_dot, p11, p12, p22] = update_scalar_kf(x_pred, x_dot_pred, p11, p12, p22, z, r)
+    innov = z - x_pred;
+
+    S = p11 + r;       % innovation covariance
+    k1 = p11/S;        % Kalman gain
+    k2 = p12/S;        % Kalman gain 
+
+    x_val = x_pred + k1*innov;
+    x_dot = x_dot_pred + k2*innov;
+
+    % covariance update
+    p22 = p22 - k2*p12;
+    p12 = p12 - k1*p12;
+    p11 = p11 - k1*p11;
+end
+
+function [x_val_p, x_dot_p, p11_p, p12_p, p22_p] = predict_scalar_kf(x_val, x_dot, p11, p12, p22, q_val, q_dot, Ts)
+    % ── State propagation f(x) ────────────────────────────────────────────
+    x_dot_p = x_dot;
+    x_val_p = x_val + Ts*x_dot;
+
+    % ── Covariance prediction ─────────────────────────────────────────────
+    p11_p = p11 + 2*Ts*p12 + p22*Ts*Ts + q_val;
+    p12_p = p12 + Ts*p22;
+    p22_p = p22 + q_dot;
+end

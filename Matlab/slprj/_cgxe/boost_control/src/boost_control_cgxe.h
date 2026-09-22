@@ -11,7 +11,6 @@
 #include "cgxeooprt.h"
 #include "slccrt.h"
 #include <time.h>
-#include <time.h>
 #define rtInf                          (mxGetInf())
 #define rtMinusInf                     (-(mxGetInf()))
 #define rtNaN                          (mxGetNaN())

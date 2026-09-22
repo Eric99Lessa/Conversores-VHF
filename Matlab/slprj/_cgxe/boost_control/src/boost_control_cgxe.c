@@ -1,25 +1,16 @@
 /* Include files */
 
 #include "boost_control_cgxe.h"
-#include "m_6xrqX5qITXgQNjIsHQxKhB.h"
-#include "m_Vk25VrZsrlIfY8DkqnY5WG.h"
+#include "m_OmrnQES9qogeQTNCDGc0yB.h"
 
 unsigned int cgxe_boost_control_method_dispatcher(SimStruct* S, int_T method,
   void* data)
 {
-  if (ssGetChecksum0(S) == 2195679973 &&
-      ssGetChecksum1(S) == 2138090989 &&
-      ssGetChecksum2(S) == 477986389 &&
-      ssGetChecksum3(S) == 811909483) {
-    method_dispatcher_6xrqX5qITXgQNjIsHQxKhB(S, method, data);
-    return 1;
-  }
-
-  if (ssGetChecksum0(S) == 4158152884 &&
-      ssGetChecksum1(S) == 1889023061 &&
-      ssGetChecksum2(S) == 288648657 &&
-      ssGetChecksum3(S) == 2235324607) {
-    method_dispatcher_Vk25VrZsrlIfY8DkqnY5WG(S, method, data);
+  if (ssGetChecksum0(S) == 4174618450 &&
+      ssGetChecksum1(S) == 1453203943 &&
+      ssGetChecksum2(S) == 2128399603 &&
+      ssGetChecksum3(S) == 4238852223) {
+    method_dispatcher_OmrnQES9qogeQTNCDGc0yB(S, method, data);
     return 1;
   }
 
